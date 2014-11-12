@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Registration form</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+	<form name="registation_data" id="registration_data_form" action="" onsubmit="return check_registration_form()">
+		<table>
+			<tr>
+				<td>Username</td>
+				<td><input type="text" name="username" id="username_text_input" /></td>
+				<td><div class="validation_message" id="username_message"><p></p></div></td>
+			</tr>
+			<tr>
+				<td>E-mail</td>
+				<td><input type="text" name="email" id="email_text_input" /></td>
+				<td><div class="validation_message" id="email_message"><p></p></div></td>
+			</tr>
+			<tr>
+				<td colspan="3"><input type="submit" value="Register" /></td>
+			</tr>
+		</table>
+	</form>
+
+	<script src="register.js"></script>
+</body>
+
+</html>

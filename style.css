@@ -1,0 +1,16 @@
+* {
+	font-size: small;
+}
+
+.validation_message p {
+	font-size: smaller;
+}
+
+.validation_message .ok {
+	color : green;
+}
+
+.validation_message .error {
+	color : red;
+}
+
