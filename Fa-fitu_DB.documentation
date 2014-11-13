@@ -1,0 +1,95 @@
+-------------------
+-------------------
+--	Fa-fitu 
+--	Database physical model documentation
+--	Piotr Nalewja 2014 - Now
+-------------------
+-------------------
+
+/////////////////////////////////////////////
+// 0. Tables
+/////////////////////////////////////////////
+Users consist of
+	uid 		- identifier
+
+	uname 		- name of user
+
+	mass 		- absolute mass of user in kg
+
+	activity 	- relative time spend on activities in one weeki.e. 1 minute of walking count for 0.5 minutes of relative activity.
+
+	age 		- self descriptory
+
+Foods consist of
+	fname		- name and also identifier
+
+	carbons		- how many calories comes from carbons in one portion
+
+	fats		- see above
+
+	proteins	- see above^2
+
+	info		- some informations provided by users
+
+	isground	- is basic (non complex) food i.e apple is basic and apple cake is complex
+
+IsPart consist of
+	dname 		- identifier also foreign key to Foods (describes pair dish(dname) - ingredient(fname))
+
+	fname 		- name of ingredien also foreign key to Foods (details above)
+
+	quantity	- quantity of ingredient needed in dish
+
+Eaten consist of
+	eid			- identifier
+
+	uid			- user who has eaten food
+
+	fname 		- foreign key to Food describing eaten food
+
+	dat 		- timestamp of eating
+
+Eaten_cost is a view. It consist of all Eaten table columns and additional carbons, fats, proteins columns derived from Foods table
+
+
+/////////////////////////////////////////////
+// 1. Relations beetween tables
+/////////////////////////////////////////////
+
+User has eaten some food:
+Eaten -(fname)- Foods -(uid)- User
+
+i.e
+Fatty has eaten 5 portions of sphagetti
+
+
+Food is made from Food:
+Foods -(fname/dname)- IsPart -(fname/fname)- Foods
+
+i.e.
+Apple cake is made of Apples
+
+
+/////////////////////////////////////////////
+// 2. Supported functions and triggers
+/////////////////////////////////////////////
+
+
+/////////Functions
+getUserEaten(int, interval) returns getCalT
+
+returns (carbons, fats, proteins) of some user in interval from now - interval to now
+
+
+/////////Triggers & Trigger functions
+
+
+//Food made from food takes CFP from ingredients not from imput
+insertFoodsTriggerFunction() returns TRIGGER
+
+CREATE TRIGGER fillinFood
+AFTER INSERT
+ON Foods
+FOR EACH ROW
+EXECUTE PROCEDURE insertFoodsTriggerFunction()
+;

@@ -1,0 +1,112 @@
+Dobra tutaj już po polsku.
+
+
+
+Baza działą tak
+
+Jest user i on czasem coś je. Mamy informacje co zjadł i kiedy oraz ile węgla, oleju i białka zjadł
+Wszystko co je user jest liczone w porcjach (porcja nie jest atomowa)
+
+User może sobie definiować jedzenie:
+
+definiowanie dzieli się na definicję podstawowych składników i złożonych
+
+podstawowe wymagają podania
+
+WTB (węglowodany, tłuszcze białka)
+Nazwy
+porcja powinna być jedna
+w opisie powinno znaleźć się jak duża jest porcja np jedno jabłko lub 100g
+
+Przykład
+
+///////////////////////////////////////////////////////////////////////////////////////
+//	Podstawowe jedzenie User input
+//
+//	komentarze nie są częścią inputu
+//	Nazwa: Jabłko
+//	Cukry: 		20 //kcal/jabłko
+//	Tłuszcze: 	0  //kcal/jabłko
+//	Białka:		0  //kcal/jabłko
+//	info:		Porcja to jedno jabłko
+///////////////////////////////////////////////////////////////////////////////////////
+
+Ja potrzebował bym do bazy tego oraz jakiegoś dodatkowego boola mówiącego, że jest to podstawowe żarcie. U mnie taki bool w bazie nazywa się isGround
+więc pozwolę sobie napisać jak powinien wyglądać dla mnie output:
+
+///////////////////////////////////////////////////////////////////////////////////////
+//	Podstawowe jedzenie Database input
+//
+//	
+//	Nazwa: 		string
+//	Cukry: 		int
+//	Tłuszcze: 	int
+//	Białka:		int
+//	info:		string
+//	isGround:	bool
+//
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+############################ 
+Złożone jedzenie
+
+$$$$$$$$$$$$$$$$$$$
+MEDTODY:
+
+Za niedługo pojawią się tutaj nazwy metod, które służa do dodawania 
+złożnego jedzenia
+
+
+//////////////////////////////////////////////////////////
+//	Złożone jedzenie DataBase input
+//
+//
+//	Nazwa:		string
+//	info:		string
+//
+//	Dodatkowo NIE PUSTA lista obiektów zawierających informację
+//
+//	Nazwa:		string
+//	Quantity:	float
+//
+//////////////////////////////////////////////////////////
+
+
+
+###############################
+Użytkownik
+
+METODY itd.
+
+///////////////////////////////////////////////////////
+//	User data DataBase input
+//
+//
+//	Nazwa:		string NOT NULL
+//	mass:		int -1 for null
+//	activity:	int -1 for null
+//	age:		int -1 for null
+//
+//
+////////////////////////////////////////////////////////
+
+
+
+
+###############################
+Zjadanie
+
+Metody
+
+
+////////////////////////////////////////////////////////
+//	Eaten DataBase input
+//
+//	Nazwa użytkownika:	string
+//	Nazwa fooda:		string
+//	date:				string postaci yy-mm-dd jak null to data ustawiana = teraz
+//
+//
+/////////////////////////////////////////////////////////
