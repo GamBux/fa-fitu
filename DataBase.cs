@@ -32,11 +32,11 @@ namespace Zwinne_Postgress
             else return true;
         }
 
-        public bool addUser(string username, int mass, int activity, int age){
+        /*public bool addUser(string username, int mass, int activity, int age){
             string massString       = mass.ToString();
             string activityString   = activity.ToString()   
         }
-
+        */
         string wrapS(string s)
         {
             return "'" + s + "'";
