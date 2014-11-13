@@ -26,8 +26,8 @@ DROP TYPE IF EXISTS getCalT CASCADE;
 
 CREATE TABLE Users(
 	uname 		varchar 	PRIMARY KEY,
-	mass 		float,
-	activity 	float,
+	mass 		int,
+	activity 	int,
 	age 		int
 );
 
