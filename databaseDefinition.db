@@ -1,0 +1,30 @@
+CREATE TABLE user (
+	UID serial PRIMARY KEY,
+	username varchar NOT NULL,
+	usermail varchar NOT NULL,
+	jindate date NOT NULL,
+	caloriesTarget int
+)
+;
+
+CREATE TABLE food(
+	FID serial PRIMARY KEY,
+	foodname varchar NOT NULL,
+	calories int NOT NULL,
+	carbon int NOT NULL,
+	fats int NOT NULL,
+	proteins int NOT NULL
+)
+;
+
+CREATE DISH(
+	DID serial PRIMARY KEY,
+	products int(25), 
+	dishname varchar NOT NULL,
+	calories int NOT NULL,
+	carbon int NOT NULL,
+	fats int NOT NULL,
+	proteins int NOT NULL
+)
+;
+
