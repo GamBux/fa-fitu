@@ -25,8 +25,7 @@ DROP TYPE IF EXISTS getCalT CASCADE;
 
 
 CREATE TABLE Users(
-	uid 		serial 		PRIMARY KEY,
-	uname 		varchar 	NOT NULL,
+	uname 		varchar 	PRIMARY KEY,
 	mass 		float,
 	activity 	float,
 	age 		int
@@ -52,7 +51,7 @@ CREATE TABLE IsPart(
 
 CREATE TABLE Eaten(
 	eid 		serial		PRIMARY KEY,
-	uid			int 		REFERENCES Users(uid) NOT NULL,
+	uname		varchar 	REFERENCES Users(uname) NOT NULL,
 	fname 		varchar 	REFERENCES Foods(fname) NOT NULL,
 	quantity	float 		NOT NULL,
 	dat 		timestamp 	DEFAULT current_timestamp
@@ -60,7 +59,7 @@ CREATE TABLE Eaten(
 ;
 
 CREATE VIEW Eaten_cost AS
-	SELECT eid, uid, fname, quantity, dat, carbons, fats, proteins 
+	SELECT eid, uname, fname, quantity, dat, carbons, fats, proteins 
 	FROM
 		Eaten
 		JOIN Foods USING(fname)
@@ -82,9 +81,9 @@ CREATE TYPE getCalT AS(
 	proteins int
 );
 
-DROP FUNCTION IF EXISTS getUserEaten(int, interval);
+DROP FUNCTION IF EXISTS getUserEaten(varchar, interval);
 
-CREATE OR REPLACE FUNCTION getUserEaten(int, interval) returns getCalT
+CREATE OR REPLACE FUNCTION getUserEaten(varchar, interval) returns getCalT
 AS $x$
 DECLARE
 	fats 	 int;
@@ -105,7 +104,7 @@ BEGIN
 	FOR fats,carbons,proteins, quantity IN
 		SELECT Eaten_cost.fats, Eaten_cost.carbons, Eaten_cost.proteins, Eaten_cost.quantity
 		FROM 	Eaten_cost
-		WHERE	uid = $1 
+		WHERE	uname = $1 
 			AND dat >= current_timestamp - $2
 
 	LOOP
@@ -230,7 +229,7 @@ insert into Users(uname, mass, activity, age) VALUES
 	('Slimmy', 55, 420, 22)
 ;
 
-insert into Eaten(uid, fname, quantity, dat) VALUES
-	(1, 'Spaghetti', 5, DEFAULT),
-	(2, 'Spaghetti', 2, '10-11-14')
+insert into Eaten(uname, fname, quantity, dat) VALUES
+	('Fatty', 'Spaghetti', 5, DEFAULT),
+	('Slimmy', 'Spaghetti', 2, '10-11-14')
 ;
