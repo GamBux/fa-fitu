@@ -1,0 +1,34 @@
+Tekst jest napisany w liczbie pojedynczej, ale niech nikt się nie obraża.
+
+1. Zainstaluj postgresa http://www.postgresql.org/download/
+	1.1 Podczas instalacji hasło powinno zostać ustawione na password – widać dokładniej czemu w pliku DataBase.cs. Jak tworzymy NpgsqlConnection tam jest string gdzie jest Password=password
+2. Po instalacji uruchom stack builder trzeba doinstalować Npgsql jest w Database drivers – Npgsql
+
+
+/////PGADMIN
+3. Doinstaluj pgAdmina http://www.postgresql.org/ftp/pgadmin3/release/v1.18.1/
+4. Odpal pgAdmina
+5. Stwórz bazę danych o nazwie Fa-fitu_DB
+6. u góry jest przycisk (lupa z napisem SQL) umożliwiający odpalenie kodu na bazie
+7. wklej kod  z Fa-fitu_DB.definition.sql do okienka 
+8. Naciśnij F5 albo jakieś inne uruchom
+
+//////VISUAL STUDIO
+9. Wstaw do folderu projektu pliki:
+	Mono.Security.dll
+	Npgsql.dll
+	policy.2.0.Npgsql.dll
+	policy.2.0.Npgsql.config
+	No i kody źródłowe
+10. ustaw referencje do plików (klikasz na nazwę projektu i kliknij add reference) potem tam jest browse i dodaj te:
+	Mono.Security.dll
+	Npgsql.dll
+	policy.2.0.Npgsql.dll
+
+11 gotowe
+
+Możesz się pobawić dodawaniem użytkowników
+
+w pgAdminie możesz odpalić następujący kod
+
+SELECT * FROM users (wielkość liter nie ma znaczenia) i wyświetli Ci wszystkich użytkowników
