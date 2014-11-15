@@ -57,9 +57,14 @@ namespace FaFitu.Models
 
     public class LoginModel
     {
-        [Required]
+       /* [Required]
         [Display(Name = "User name")]
-        public string UserName { get; set; }
+        public string UserName { get; set; } */
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -75,6 +80,11 @@ namespace FaFitu.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using FaFitu.Filters;
 using FaFitu.Models;
+using FaFitu.DatabaseUtils;
 
 namespace FaFitu.Controllers
 {
@@ -35,13 +36,13 @@ namespace FaFitu.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && WebSecurity.Login(model.Email/*UserName*/, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "The email address or password provided is incorrect.");
             return View(model);
         }
 
@@ -77,7 +78,17 @@ namespace FaFitu.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                try
+                
+                // ask database if this is a new user and if so, register them
+
+                if(!UsersRelated.UserExists(model.Email))
+                {
+                    if(UsersRelated.AddUser(model))
+                    {
+                        return RedirectToAction("Index", "About");
+                    }
+                }
+                /*try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
@@ -86,7 +97,7 @@ namespace FaFitu.Controllers
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                }
+                }*/
             }
 
             // If we got this far, something failed, redisplay form
@@ -263,18 +274,24 @@ namespace FaFitu.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+              //  using (UsersContext db = new UsersContext())
+             //   {
+              //      UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
-                    if (user == null)
+                    string comesFrom = @"FB:" + model.ExternalLoginData;
+                    if (!UsersRelated.UserExists(comesFrom))
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+
+
+                        UsersRelated.AddUser(model.UserName, comesFrom);
+                       
+                        
+                        /*db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);*/
 
                         return RedirectToLocal(returnUrl);
                     }
@@ -282,7 +299,7 @@ namespace FaFitu.Controllers
                     {
                         ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                     }
-                }
+            
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;

@@ -1,4 +1,4 @@
-Tekst jest napisany w liczbie pojedynczej, ale niech nikt się nie obraża.
+﻿Tekst jest napisany w liczbie pojedynczej, ale niech nikt się nie obraża.
 
 1. Zainstaluj postgresa http://www.postgresql.org/download/
 	1.1 Podczas instalacji hasło powinno zostać ustawione na password – widać dokładniej czemu w pliku DataBase.cs. Jak tworzymy NpgsqlConnection tam jest string gdzie jest Password=password

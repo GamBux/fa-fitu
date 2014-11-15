@@ -22,9 +22,9 @@ namespace FaFitu
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "",
-            //    appSecret: "");
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "355167161323559",
+                appSecret: "e6abd27ba89d69267c12891ba46fa0e8");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }
