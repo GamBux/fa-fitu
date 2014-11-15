@@ -25,14 +25,18 @@ DROP TYPE IF EXISTS getCalT CASCADE;
 
 
 CREATE TABLE Users(
-	uname 		varchar 	PRIMARY KEY,
+	uid 		serial PRIMARY KEY,
+	uname 		varchar,
+	email		varchar,
 	mass 		int,
 	activity 	int,
-	age 		int
+	age 		int,
+	UNIQUE 	(uname,email)
 );
 
 CREATE TABLE Foods(
 	fname 		varchar 	PRIMARY KEY,
+	uid 		int 		references Users(uid),
 	carbons 	float 		,
 	fats 		float 		,
 	proteins 	float 		,
@@ -42,7 +46,7 @@ CREATE TABLE Foods(
 ;
 
 CREATE TABLE IsPart(
-	dname 		varchar 	,--REFERENCES Foods(fname) NOT NULL,
+	dname 		varchar 	REFERENCES Foods(fname), -- NOT NULL,
 	fname  		varchar 	REFERENCES Foods(fname) NOT NULL,
 	quantity	float 		NOT NULL,
 	CONSTRAINT partTitle PRIMARY KEY (dname, fname)
@@ -51,7 +55,7 @@ CREATE TABLE IsPart(
 
 CREATE TABLE Eaten(
 	eid 		serial		PRIMARY KEY,
-	uname		varchar 	REFERENCES Users(uname) NOT NULL,
+	uid			int 		REFERENCES Users(uid) NOT NULL,
 	fname 		varchar 	REFERENCES Foods(fname) NOT NULL,
 	quantity	float 		NOT NULL,
 	dat 		timestamp 	DEFAULT current_timestamp
@@ -59,10 +63,11 @@ CREATE TABLE Eaten(
 ;
 
 CREATE VIEW Eaten_cost AS
-	SELECT eid, uname, fname, quantity, dat, carbons, fats, proteins 
+	SELECT eid, users.uid, uname, email, fname, quantity, dat, carbons, fats, proteins 
 	FROM
 		Eaten
 		JOIN Foods USING(fname)
+		JOIN Users on(users.uid = eaten.uid)
 ;
 
 
@@ -71,6 +76,10 @@ CREATE VIEW Eaten_cost AS
 ///			   Function Definitions
 */
 
+/*uid -> Foods*/
+CREATE OR REPLACE FUNCTION UserFoods(int) returns setof Foods
+    AS $$ SELECT Foods.* FROM users RIGHT JOIN foods USING(uid) WHERE uid = $1 OR uid is NULL $$
+    LANGUAGE SQL;
 
 
 
@@ -81,9 +90,9 @@ CREATE TYPE getCalT AS(
 	proteins int
 );
 
-DROP FUNCTION IF EXISTS getUserEaten(varchar, interval);
+DROP FUNCTION IF EXISTS getUserEaten(int, interval);
 
-CREATE OR REPLACE FUNCTION getUserEaten(varchar, interval) returns getCalT
+CREATE OR REPLACE FUNCTION getUserEaten(int, interval) returns getCalT
 AS $x$
 DECLARE
 	fats 	 int;
@@ -104,7 +113,7 @@ BEGIN
 	FOR fats,carbons,proteins, quantity IN
 		SELECT Eaten_cost.fats, Eaten_cost.carbons, Eaten_cost.proteins, Eaten_cost.quantity
 		FROM 	Eaten_cost
-		WHERE	uname = $1 
+		WHERE	uid = $1 
 			AND dat >= current_timestamp - $2
 
 	LOOP
@@ -224,12 +233,21 @@ insert into Foods(fname,  info, isGround) VALUES
 	('Spaghetti', 'Gorlami!', false)
 ;
 
-insert into Users(uname, mass, activity, age) VALUES
-	('Fatty', 105, 0, 22),
-	('Slimmy', 55, 420, 22)
+insert into Users(uname, email, mass, activity, age) VALUES
+	('Fatty','blabla@bal.bla', 105, 0, 22),
+	('Slimmy','blabla@bal.bla', 55, 420, 22)
 ;
 
-insert into Eaten(uname, fname, quantity, dat) VALUES
-	('Fatty', 'Spaghetti', 5, DEFAULT),
-	('Slimmy', 'Spaghetti', 2, '10-11-14')
+insert into Eaten(uid, fname, quantity, dat) VALUES
+	(1, 'Spaghetti', 5, DEFAULT),
+	(2, 'Spaghetti', 2, '10-11-14')
+;
+
+insert into IsPart(dname, fname, quantity) VALUES
+('Sałatka','Marchew',1),
+('Sałatka','Seler',2)
+;
+
+insert into Foods(fname, uid, info, isGround) VALUES
+('Sałatka', 1, 'mniam', false)
 ;
