@@ -14,7 +14,7 @@ namespace FaFitu.Models
         }
         
         public string UserName { get; set; }
-       // public string ComesFrom { get; set; }
+        public string ComesFrom { get; set; }
         public int Mass { get; set; }
         public int CaloriesToBurn { get; set; }
         public int CaloriesToReceive { get; set; }
