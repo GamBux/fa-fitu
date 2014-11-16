@@ -46,7 +46,7 @@ CREATE TABLE Foods(
 ;
 
 CREATE TABLE IsPart(
-	dname 		varchar 	REFERENCES Foods(fname), -- NOT NULL,
+	dname 		varchar 	,--REFERENCES Foods(fname), -- NOT NULL,
 	fname  		varchar 	REFERENCES Foods(fname) NOT NULL,
 	quantity	float 		NOT NULL,
 	CONSTRAINT partTitle PRIMARY KEY (dname, fname)
