@@ -27,11 +27,15 @@ DROP TYPE IF EXISTS getCalT CASCADE;
 CREATE TABLE Users(
 	uid 		serial PRIMARY KEY,
 	uname 		varchar,
-	email		varchar,
+	pass		varchar,
+	comesfrom		varchar,
 	mass 		int,
 	activity 	int,
 	age 		int,
-	UNIQUE 	(uname,email)
+	caloriesTarget int,
+	caloriesBurned int,
+	caloriesReceived int,
+	UNIQUE 	(comesfrom)
 );
 
 CREATE TABLE Foods(
@@ -63,7 +67,7 @@ CREATE TABLE Eaten(
 ;
 
 CREATE VIEW Eaten_cost AS
-	SELECT eid, users.uid, uname, email, fname, quantity, dat, carbons, fats, proteins 
+	SELECT eid, users.uid, uname, comesfrom, fname, quantity, dat, carbons, fats, proteins 
 	FROM
 		Eaten
 		JOIN Foods USING(fname)
@@ -233,9 +237,9 @@ insert into Foods(fname,  info, isGround) VALUES
 	('Spaghetti', 'Gorlami!', false)
 ;
 
-insert into Users(uname, email, mass, activity, age) VALUES
-	('Fatty','blabla@bal.bla', 105, 0, 22),
-	('Slimmy','blabla@bal.bla', 55, 420, 22)
+insert into Users(uname, comesfrom, pass, mass, activity, age) VALUES
+	('Fatty','bladbla@bal.bla', 'A', 105, 0, 22),
+	('Slimmy','blabla@bal.bla', 'AA', 55, 420, 22)
 ;
 
 insert into Eaten(uid, fname, quantity, dat) VALUES
