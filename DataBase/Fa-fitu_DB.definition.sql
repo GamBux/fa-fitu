@@ -35,6 +35,7 @@ CREATE TABLE Users(
 	caloriesTarget int,
 	caloriesBurned int,
 	caloriesReceived int,
+	gender 		varchar,
 	UNIQUE 	(comesfrom)
 );
 
