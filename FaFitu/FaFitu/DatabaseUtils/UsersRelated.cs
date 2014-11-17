@@ -3,6 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Npgsql;
+
+using FaFitu.Models;
+using FaFitu.DatabaseUtils;
+using FaFitu.Utils;
 
 namespace FaFitu.DatabaseUtils
 {
@@ -10,23 +15,114 @@ namespace FaFitu.DatabaseUtils
     {
         public static UserModel GetUser(string comesFrom)
         {
-            // ask database
+            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=postgres;Password=password;Database=Fa-fitu_DB;");
+
+            string operation = "SELECT * FROM Users WHERE comesfrom = " + "'" + comesFrom + "'";
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            object user = Command.ExecuteScalar();
+            conn.Close();
+
+
             return null;
         }
 
         public static bool UserExists(string comesFrom)
         {
-            return true;
+            UserModel user = GetUser(comesFrom);
+
+            if (user == null) return false;
+            else return true;
+
         }
 
-        public static bool AddUser(RegisterModel user)
+        /*public static bool AddUser(RegisterModel user)
         {
-            return true;
-        }
+            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=postgres;Password=password;Database=Fa-fitu_DB;");
+
+            string operation = "INSERT INTO Users(uname, comesfrom, pass) VALUES ('" + user.UserName +  "','" + user.Email +  "','" + user.Password  + "')";
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
+
+            return ret > 0;
+        }*/
 
         public static bool AddUser(string username, string comesFrom)
         {
-            return true;
+            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=postgres;Password=password;Database=Fa-fitu_DB;");
+
+            string operation = "INSERT INTO Users(uname, comesfrom) VALUES ('" + username + "','" + comesFrom  + "')";
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
+
+            return ret > 0;
         }
+
+        public static bool AddUser(UserModel user) {
+            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=postgres;Password=password;Database=Fa-fitu_DB;");
+
+            string operation = "INSERT INTO Users(uname, comesfrom, mass, age, gender, caloriesTarget, caloriesBurned, caloriesReceived) VALUES ";
+            
+            Queue<string> q = new Queue<string>();
+
+            //Name handling
+            string unameS   = UtilS.wrap(user.UserName);
+            q.Enqueue(unameS);
+
+            //Comesfrom
+            string comesS   = UtilS.wrap(user.ComesFrom);
+            q.Enqueue(comesS);
+
+            //Mass
+            string massS    = UtilS.nullToS(user.Mass);
+            q.Enqueue(massS);
+
+            //Age
+            string ageS     = UtilS.nullToS(user.Age);
+            q.Enqueue(ageS);
+
+            //Gender
+            string GenderS  = UtilS.genderToS(user.Gender);
+            q.Enqueue(GenderS);
+
+            //ToBurn
+            string CaloriesToBurnS = UtilS.nullToS(user.CaloriesToBurn);
+            q.Enqueue(CaloriesToBurnS);
+
+            //Received
+            string CaloriesReceivedS = UtilS.nullToS(user.CaloriesToReceive);
+            q.Enqueue(CaloriesReceivedS);
+
+            //Burned
+            string CaloriesBurnedS = UtilS.nullToS(user.CaloriesBurned);
+            q.Enqueue(CaloriesBurnedS);
+
+            //putting it together
+            string record = UtilS.map(q, ", ");
+            record = UtilS.wrap("(", record, ")");
+
+            // creating whole command
+            operation += record;
+
+
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
+
+
+            return ret > 0;
+
+        }
+
+       
     }
 }
