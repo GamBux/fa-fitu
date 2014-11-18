@@ -88,3 +88,5 @@ C:\VS_projects\FaFitu\FaFitu\bin\v8\Noesis.Javascript.x64.dll
 C:\VS_projects\FaFitu\FaFitu\bin\v8\Noesis.Javascript.x86.dll
 C:\VS_projects\FaFitu\FaFitu\bin\TypeScriptBundleTransform.dll
 C:\VS_projects\FaFitu\FaFitu\bin\policy.2.0.Npgsql.config
+D:\GitHub\Zwinne\fa-fitu\FaFitu\FaFitu\obj\Debug\FaFitu.csprojResolveAssemblyReference.cache
+D:\GitHub\Zwinne\fa-fitu\FaFitu\FaFitu\obj\Debug\FaFitu.dll

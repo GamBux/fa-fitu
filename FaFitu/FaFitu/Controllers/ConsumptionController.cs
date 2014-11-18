@@ -13,9 +13,9 @@ namespace FaFitu.Controllers
 
         public ActionResult Index()
         {
-            if (false /*user filled in their weight etc*/)
-                return View();
-            else
+           // if (false /*user filled in their weight etc*/)
+             //   return View();
+            //else
                 return RedirectToAction("Index", "UserPanel");
         }
 
