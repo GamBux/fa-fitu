@@ -206,6 +206,7 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UserPanelController.cs" />
     <Compile Include="DatabaseUtils\UsersRelated.cs" />
+    <Compile Include="DatabaseUtils\UtilS.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Npgsql;
 
-using FaFitu.Models;
+
 using FaFitu.DatabaseUtils;
 using FaFitu.Utils;
 
