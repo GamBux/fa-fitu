@@ -25,11 +25,11 @@ namespace FaFitu.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<MembershipsContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new MembershipsContext())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +38,7 @@ namespace FaFitu.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "MembershipTable", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

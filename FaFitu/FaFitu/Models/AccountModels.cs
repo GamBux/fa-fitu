@@ -8,23 +8,24 @@ using System.Web.Security;
 
 namespace FaFitu.Models
 {
-    public class UsersContext : DbContext
+    public class MembershipsContext : DbContext
     {
-        public UsersContext()
+        public MembershipsContext()
             : base("DefaultConnection")
         {
         }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<MembershipTable> MembershipTables { get; set; }
     }
 
-    [Table("UserProfile")]
-    public class UserProfile
+    [Table("MembershipTable")]
+    public class MembershipTable
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Service { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -57,14 +58,14 @@ namespace FaFitu.Models
 
     public class LoginModel
     {
-       /* [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; } */
-
         [Required]
+        [Display(Name = "User name")]
+        public string UserName { get; set; } 
+
+      /*  [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string Email { get; set; }*/
 
         [Required]
         [DataType(DataType.Password)]
@@ -81,10 +82,10 @@ namespace FaFitu.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+       /* [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string Email { get; set; }*/
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
