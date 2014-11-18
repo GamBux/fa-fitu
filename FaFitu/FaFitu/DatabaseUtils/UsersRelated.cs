@@ -12,7 +12,7 @@ namespace FaFitu.DatabaseUtils
 {
     public class UsersRelated
     {
-        public static UserModel GetUser(string comesFrom)
+        public static UserModel GetUser(string service, string login)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
@@ -27,7 +27,7 @@ namespace FaFitu.DatabaseUtils
             return null;
         }
 
-        public static bool UserExists(string comesFrom)
+        public static bool UserExists(string service, string login)
         {
             UserModel user = GetUser(comesFrom);
 
@@ -51,8 +51,14 @@ namespace FaFitu.DatabaseUtils
         // return false;
         // }
 
-        public static bool AddUser(string username, string comesFrom, string password)
+        public static bool AddUser(//string username, string comesFrom, string password)
+            string service, string login, string password = null)
         {
+            if (password == null)
+            {
+                // confirm that service = some external provider
+            }
+
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
             string operation = "INSERT INTO Users(uname, comesfrom, pass) VALUES";
 
@@ -84,7 +90,8 @@ namespace FaFitu.DatabaseUtils
             return ret > 0;
         }
 
-        public static bool AddUser(UserModel user)
+        // nigdy nie powinnismy wywolwac tej metody - formularz z mass, age etc dostepny tylko dla juz zarejestrowanych uzytkownikow!
+        /*public static bool AddUser(UserModel user)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
             string operation = "INSERT INTO Users(uname, comesfrom, pass, mass, age, gender, caloriesTarget, caloriesBurned, caloriesReceived) VALUES ";
@@ -144,9 +151,9 @@ namespace FaFitu.DatabaseUtils
 
             return ret > 0;
 
-        }
+        }*/
 
-        public static bool UpdateUser(UserModel user, string OLDcomesfrom)
+        public static bool UpdateUser(UserModel user)//, string OLDcomesfrom)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
