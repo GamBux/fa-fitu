@@ -42,16 +42,16 @@ CREATE TABLE Users(
 CREATE TABLE Foods(
 	fname 		varchar 	PRIMARY KEY,
 	uid 		int 		references Users(uid),
-	carbons 	float 		,
-	fats 		float 		,
-	proteins 	float 		,
-	info 		varchar,
+	carbons 	float 		DEFAULT 0,
+	fats 		float 		DEFAULT 0,
+	proteins 	float 		DEFAULT 0,
+	info 		varchar		DEFAULT 'FUCK OFF!',
 	isGround 	bool 		NOT NULL
 )
 ;
 
 CREATE TABLE IsPart(
-	dname 		varchar 	,--REFERENCES Foods(fname), -- NOT NULL,
+	dname 		varchar 	REFERENCES Foods(fname), -- NOT NULL,
 	fname  		varchar 	REFERENCES Foods(fname) NOT NULL,
 	quantity	float 		NOT NULL,
 	CONSTRAINT partTitle PRIMARY KEY (dname, fname)
@@ -162,7 +162,7 @@ $x$	LANGUAGE plpgsql
 DROP FUNCTION IF EXISTS insertFoodsTriggerFunction()
 ;
 
-CREATE OR REPLACE FUNCTION insertFoodsTriggerFunction() returns TRIGGER
+/*CREATE OR REPLACE FUNCTION insertFoodsTriggerFunction() returns TRIGGER
 AS $$
 DECLARE
 	fats 	 int;
@@ -206,15 +206,43 @@ BEGIN
 	RETURN NEW;
 END
 $$	LANGUAGE plpgsql
-;
+;*/
 
 DROP TRIGGER IF EXISTS fillinFood ON Foods;
 
-CREATE TRIGGER fillinFood
+/*CREATE TRIGGER fillinFood
 AFTER INSERT
 ON Foods
 FOR EACH ROW
 EXECUTE PROCEDURE insertFoodsTriggerFunction()
+;*/
+
+CREATE OR REPLACE FUNCTION updateFoodsAfterPartInsertionTF() RETURNS TRIGGER
+AS $$
+DECLARE
+	food Foods;
+	part Foods;
+BEGIN
+	SELECT INTO part Foods.* FROM Foods JOIN IsPart ON (Foods.fname = IsPart.fname) WHERE IsPart.fname = NEW.fname AND IsPart.dname = NEW.dname;
+	SELECT INTO food * FROM Foods WHERE fname = NEW.dname;
+	UPDATE Foods 
+		SET (carbons,fats,proteins) = (part.carbons * NEW.quantity + food.carbons, part.fats * NEW.quantity + food.fats, part.proteins * NEW.quantity + food.proteins)
+		WHERE fname = NEW.dname
+	;
+
+	RETURN NEW;
+END
+$$	LANGUAGE plpgsql
+;
+
+DROP TRIGGER IF EXISTS updateFoodsAfterPartInsertionTrigger ON IsPart
+;
+
+CREATE TRIGGER updateFoodsAfterPartInsertionTrigger
+AFTER INSERT
+ON IsPart
+FOR EACH ROW
+EXECUTE PROCEDURE updateFoodsAfterPartInsertionTF()
 ;
 
 --składniki wpisane na stałe
@@ -226,6 +254,10 @@ insert into Foods(fname, carbons, fats, proteins, info, isGround) VALUES
 	('Seler', 3, 1, 3, 'Jakie to dziwne!', true)
 ;
 	
+insert into Foods(fname,  info, isGround) VALUES
+	('Spaghetti', 'Gorlami!', false)
+;
+
 insert into IsPart(dname, fname, quantity) VALUES
 	('Spaghetti', 	'Pomidor', 5),
 	('Spaghetti',	'Makaron', 2),
@@ -234,9 +266,7 @@ insert into IsPart(dname, fname, quantity) VALUES
 	('Spaghetti',	'Seler', 1)
 ;
 
-insert into Foods(fname,  info, isGround) VALUES
-	('Spaghetti', 'Gorlami!', false)
-;
+
 
 insert into Users(uname, comesfrom, pass, mass, activity, age) VALUES
 	('Fatty','bladbla@bal.bla', 'A', 105, 0, 22),
@@ -248,11 +278,12 @@ insert into Eaten(uid, fname, quantity, dat) VALUES
 	(2, 'Spaghetti', 2, '10-11-14')
 ;
 
+insert into Foods(fname, uid, info, isGround) VALUES
+('Sałatka', 1, 'mniam', false)
+;
+
 insert into IsPart(dname, fname, quantity) VALUES
 ('Sałatka','Marchew',1),
 ('Sałatka','Seler',2)
 ;
 
-insert into Foods(fname, uid, info, isGround) VALUES
-('Sałatka', 1, 'mniam', false)
-;
