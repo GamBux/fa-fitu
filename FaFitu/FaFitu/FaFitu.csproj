@@ -205,6 +205,7 @@
     <Compile Include="Controllers\PhysicalActivityController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UserPanelController.cs" />
+    <Compile Include="DatabaseUtils\DataBaseConnection.cs" />
     <Compile Include="DatabaseUtils\UsersRelated.cs" />
     <Compile Include="DatabaseUtils\UtilS.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
