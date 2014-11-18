@@ -284,7 +284,7 @@ namespace FaFitu.Controllers
                         // Insert name into the profile table
 
 
-                        UsersRelated.AddUser(model.UserName, comesFrom);
+                       // UsersRelated.AddUser(model.UserName, comesFrom);
                        
                         
                         /*db.UserProfiles.Add(new UserProfile { UserName = model.UserName });

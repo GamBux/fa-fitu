@@ -20,6 +20,7 @@ namespace FaFitu.Models
         public int CaloriesToReceive { get; set; }
         public int CaloriesBurned   { get; set; }
         public int Age              { get; set; }
+        public string Password      { get; set; }
         public Sex Gender           { get; set; }
     }
 }
