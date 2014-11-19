@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using FaFitu.Filters;
 using FaFitu.Models;
 using FaFitu.DatabaseUtils;
+using FaFitu.Utils;
 
 namespace FaFitu.Controllers
 {
@@ -80,10 +81,16 @@ namespace FaFitu.Controllers
                 // Attempt to register the user
                 try
                 {
+                    Console.WriteLine("register {0} , {1}", model.UserName, model.Password);
+                    if(UsersRelated.UserExists(model.UserName, UtilS.serviceToInt("email")))
+                    {
+                        Console.WriteLine("already exists!");
+                    }
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
 
-                    UsersRelated.AddUser("email", model.UserName, model.Password);
+                    UsersRelated.AddUser(model.UserName, UtilS.serviceToInt("email"), model.Password);
+                   // UsersRelated.AddUser("email", model.UserName, model.Password);
 
                     return RedirectToAction("Index", "About");
                 }
@@ -258,32 +265,48 @@ namespace FaFitu.Controllers
         {
             string provider = null;
             string providerUserId = null;
-
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
+            try
             {
-                return RedirectToAction("Manage");
+                if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
+                {
+                    return RedirectToAction("Manage");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // Insert a new user into the database
+                    Console.WriteLine("extrenal login conf, provider = {0}, provuserid = {1}, externallogdata = {2}", provider, providerUserId, model.ExternalLoginData);
+                    using (MembershipsContext db = new MembershipsContext())
+                    {
+                        MembershipTable user = db.MembershipTables.FirstOrDefault(u => u.UserName.ToLower() == providerUserId.ToLower()/* model.UserName.ToLower()*/);
+
+                        if (!UsersRelated.UserExists(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider)))
+                        {
+                            if(user != null)
+                            {
+                                throw new Exception("user exists and doesn't exist at the same time!");
+                            }
+                            db.MembershipTables.Add(new MembershipTable { UserName = providerUserId.ToLower() });
+                            db.SaveChanges();
+
+
+                            UsersRelated.AddUser(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider));
+                            OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, /*model.UserName*/providerUserId);
+                            OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                        }
+                    }
+                }
             }
-
-            if (ModelState.IsValid)
+            catch(Exception e)
             {
-                // Insert a new user into the database
-                Console.WriteLine("extrenal login conf, provider = {0}, provuserid = {1}, externallogdata = {2}", provider, providerUserId, model.ExternalLoginData);
-                if (!UsersRelated.UserExists(/*service*/ /*sthlike "FB"*/ provider, model.ExternalLoginData))
-                {
-                    // Insert name into the profile table
-                    UsersRelated.AddUser(/*service*/ provider, model.ExternalLoginData);
-
-                    // UsersRelated.AddUser(model.UserName, comesFrom);
-
-                    OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                    OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                    return RedirectToLocal(returnUrl);
-                }
-                else
-                {
-                    ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                }
+                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Message);
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;

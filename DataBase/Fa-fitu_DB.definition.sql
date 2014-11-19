@@ -26,17 +26,15 @@ DROP TYPE IF EXISTS getCalT CASCADE;
 
 CREATE TABLE Users(
 	uid 		serial PRIMARY KEY,
-	uname 		varchar,
+	uname 		varchar NOT NULL,
+	email		varchar UNIQUE,
 	pass		varchar,
-	comesfrom		varchar,
 	mass 		int,
 	activity 	int,
 	age 		int,
 	caloriesTarget int,
-	caloriesBurned int,
-	caloriesReceived int,
-	gender 		varchar,
-	UNIQUE 	(comesfrom)
+	service int NOT NULL DEFAULT 0,
+	UNIQUE 	(service,uname)
 );
 
 CREATE TABLE Foods(
@@ -68,7 +66,7 @@ CREATE TABLE Eaten(
 ;
 
 CREATE VIEW Eaten_cost AS
-	SELECT eid, users.uid, uname, comesfrom, fname, quantity, dat, carbons, fats, proteins 
+	SELECT uname, email, pass, mass, activity, age, caloriesTarget, service, eid, fname, quantity, dat, carbons, fats, proteins 
 	FROM
 		Eaten
 		JOIN Foods USING(fname)
@@ -268,9 +266,17 @@ insert into IsPart(dname, fname, quantity) VALUES
 
 
 
-insert into Users(uname, comesfrom, pass, mass, activity, age) VALUES
-	('Fatty','bladbla@bal.bla', 'A', 105, 0, 22),
-	('Slimmy','blabla@bal.bla', 'AA', 55, 420, 22)
+insert into Users(uname, email, pass, mass, activity, age, caloriesTarget) VALUES
+	('Fatty','bladbla@bal.bla', 'A', 105, 0, 22, 2500),
+	('Slimmy','blabla@bal.bla', 'AA', 55, 420, 22, 1800)
+;
+
+insert into Users(uname, email, pass, activity, age, caloriesTarget) VALUES
+	('Antigravity','I have no weight', 'A', 0, 22, 2500)
+;
+
+insert into Users(uname, pass, mass, activity, age, caloriesTarget) VALUES
+	('Webless','I have no email', 50, 0, 22, 2500)
 ;
 
 insert into Eaten(uid, fname, quantity, dat) VALUES

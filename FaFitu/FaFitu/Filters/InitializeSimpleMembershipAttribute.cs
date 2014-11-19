@@ -37,7 +37,6 @@ namespace FaFitu.Filters
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "MembershipTable", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)

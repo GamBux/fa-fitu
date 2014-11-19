@@ -12,53 +12,50 @@ namespace FaFitu.DatabaseUtils
 {
     public class UsersRelated
     {
-        public static UserModel GetUser(string service, string login)
+        public static UserModel GetUser(string username, int service)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
-            string operation = "SELECT * FROM Users WHERE comesfrom = " + "'" + comesFrom + "'";
+            string operation = "SELECT * FROM Users WHERE (uname,service) = (" + UtilS.wrap(username) + "," + service.ToString() + ")";
             NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
 
             conn.Open();
-            object user = Command.ExecuteScalar();
+            UserModel user = new UserModel();
+            NpgsqlDataReader rd = Command.ExecuteReader();
+
+            bool isResult = false;
+            while (rd.Read()) {
+                isResult = true;
+                int i = 0;
+                user.uid			= (int)rd[i++];
+                user.uname          = UtilS.possibleNullObjectToString(rd[i++]);
+                user.email          = UtilS.possibleNullObjectToString(rd[i++]);
+                user.pass           = UtilS.possibleNullObjectToString(rd[i++]);
+                user.mass           = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.activity       = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.age            = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.caloriesTarget = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.service        = UtilS.possibleNullObjectToInt(rd[i++]);
+            }
             conn.Close();
 
 
-            return null;
+            if (isResult) return user;
+            else return null;
         }
 
-        public static bool UserExists(string service, string login)
+        public static bool UserExists(string username, int service)
         {
-            UserModel user = GetUser(comesFrom);
+            UserModel user = GetUser(username, service);
 
             if (user == null) return false;
             else return true;
 
         }
 
-        //public static bool AddUser(RegisterModel user)
-        // {
-        /*   NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
-           string operation = "INSERT INTO Users(uname, comesfrom, pass) VALUES ('" + user.UserName +  "','" + user.Email +  "','" + user.Password  + "')";
-           NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
-
-           conn.Open();
-           int ret = Command.ExecuteNonQuery();
-           conn.Close();
-
-           return ret > 0;*/
-        // return false;
-        // }
-
-        public static bool AddUser(//string username, string comesFrom, string password)
-            string service, string login, string password = null)
+        /*public static bool AddUser(string username, string comesFrom, string password)
         {
-            if (password == null)
-            {
-                // confirm that service = some external provider
-            }
-
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
             string operation = "INSERT INTO Users(uname, comesfrom, pass) VALUES";
 
@@ -88,60 +85,33 @@ namespace FaFitu.DatabaseUtils
             conn.Close();
 
             return ret > 0;
+        }*/
+
+        public static bool AddUser(string username, int service, string password = null)
+        {
+            if(service == 0 && password == null) // i.e. native fafitu member without pass - sth wrong!
+            {
+                return false;
+            }
+            var um = new UserModel();
+            um.activity = -1;
+            um.age = -1;
+            um.caloriesTarget = -1;
+            um.email = null;
+            um.service = service;
+            um.uname = UtilS.ifEmptyThenNull(username);//UtilS.possibleNullObjectToString(username);
+            um.pass = UtilS.ifEmptyThenNull(password);
+
+            return AddUser(um);
         }
 
-        // nigdy nie powinnismy wywolwac tej metody - formularz z mass, age etc dostepny tylko dla juz zarejestrowanych uzytkownikow!
-        /*public static bool AddUser(UserModel user)
+        public static bool AddUser(UserModel user)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
-            string operation = "INSERT INTO Users(uname, comesfrom, pass, mass, age, gender, caloriesTarget, caloriesBurned, caloriesReceived) VALUES ";
-
-            Queue<string> q = new Queue<string>();
-
-            //Name handling
-            string unameS = UtilS.wrap(user.UserName);
-            q.Enqueue(unameS);
-
-            //Comesfrom
-            string comesS = UtilS.wrap(user.ComesFrom);
-            q.Enqueue(comesS);
-
-            //Comesfrom
-            string passS = UtilS.wrap(user.Password);
-            q.Enqueue(passS);
-
-            //Mass
-            string massS = UtilS.nullToS(user.Mass);
-            q.Enqueue(massS);
-
-            //Age
-            string ageS = UtilS.nullToS(user.Age);
-            q.Enqueue(ageS);
-
-            //Gender
-            string GenderS = UtilS.genderToS(user.Gender);
-            q.Enqueue(GenderS);
-
-            //ToBurn
-            string CaloriesToBurnS = UtilS.nullToS(user.CaloriesToBurn);
-            q.Enqueue(CaloriesToBurnS);
-
-            //Received
-            string CaloriesReceivedS = UtilS.nullToS(user.CaloriesToReceive);
-            q.Enqueue(CaloriesReceivedS);
-
-            //Burned
-            string CaloriesBurnedS = UtilS.nullToS(user.CaloriesBurned);
-            q.Enqueue(CaloriesBurnedS);
-
-            //putting it together
-            string record = UtilS.map(q, ", ");
-            record = UtilS.wrap("(", record, ")");
-
+            string operation = "INSERT INTO Users" + UserModel.getFormatedFields() +"VALUES " + user.getFormatedValues();
+            
             // creating whole command
-            operation += record;
-
-
+           
             NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
 
             conn.Open();
@@ -151,9 +121,9 @@ namespace FaFitu.DatabaseUtils
 
             return ret > 0;
 
-        }*/
+        }
 
-        public static bool UpdateUser(UserModel user)//, string OLDcomesfrom)
+      /*  public static bool UpdateUser(UserModel user, string OLDcomesfrom)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
@@ -209,7 +179,7 @@ namespace FaFitu.DatabaseUtils
 
             return ret > 0;
 
-        }
-
+        }*/
+        
     }
 }

@@ -25,7 +25,7 @@ namespace FaFitu.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public string Service { get; set; }
+   //     public string Service { get; set; }
     }
 
     public class RegisterExternalLoginModel
