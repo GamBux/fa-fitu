@@ -49,23 +49,23 @@ namespace FaFitu.Models
             q.Enqueue(passS);
 
             //mass
-            string massS = UtilS.nullToS(this.mass);
+            string massS = UtilS.maybeIntToS(this.mass);
             q.Enqueue(massS);
 
             //activity
-            string activityS = UtilS.nullToS(this.activity);
+            string activityS = UtilS.maybeIntToS(this.activity);
             q.Enqueue(activityS);
 
             //age
-            string ageS = UtilS.nullToS(this.age);
+            string ageS = UtilS.maybeIntToS(this.age);
             q.Enqueue(ageS);
 
             //caloriesTarget
-            string caloriesTargetS = UtilS.nullToS(this.caloriesTarget);
+            string caloriesTargetS = UtilS.maybeIntToS(this.caloriesTarget);
             q.Enqueue(caloriesTargetS);
 
             //service
-            string serviceS = UtilS.nullToS(this.service);
+            string serviceS = UtilS.maybeIntToS(this.service);
             q.Enqueue(serviceS);
 
             //putting it together
