@@ -6,7 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*Input.cache
+*.cache
 
 # User-specific folders
 *.sln.ide/
