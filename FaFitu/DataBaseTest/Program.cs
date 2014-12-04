@@ -16,21 +16,19 @@ namespace DataBaseTest
         {
             UserModel user = new UserModel();
 
-            user.UserName      		= "Ada Ramirez"; 
-            user.ComesFrom     		= "FF:Ada.Ramirez@gamil.com"; 
-            user.Mass             	= 65; 
-            user.CaloriesToBurn   	= 1900; 
-            user.CaloriesToReceive 	= 450; 
-            user.CaloriesBurned   	= 300; 
-            user.Age              	= 35;
-            user.Password           = "QWERTY";
-            user.Gender           	= UserModel.Sex.FEMALE;
-
+            
+            user.uname			= "Ada";
+            user.email			= "Ada.Ramirez@gamil.com";
+            user.pass			= "MySuperPass";
+            user.mass			= 65;
+            user.activity		= 100;
+            user.age			= 45;
+            user.caloriesTarget	= 2000;
+            if (UsersRelated.UserExists("Ada") == false) UsersRelated.AddUser(user);
+            UsersRelated.DeleteUser("Ada", 0);
             UsersRelated.AddUser(user);
+            UserModel user2 = UsersRelated.GetUser("Ada", 0);
 
-            user.ComesFrom = "FF:Ada.Ramirez@gmail.com";
-
-            UsersRelated.UpdateUser(user, "FF:Ada.Ramirez@gamil.com");
         }
     }
 }

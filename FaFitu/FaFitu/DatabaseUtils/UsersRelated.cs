@@ -12,7 +12,7 @@ namespace FaFitu.DatabaseUtils
 {
     public class UsersRelated
     {
-        public static UserModel GetUser(string username, int service)
+        public static UserModel GetUser(string username, int service = 0)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
@@ -43,8 +43,9 @@ namespace FaFitu.DatabaseUtils
             if (isResult) return user;
             else return null;
         }
+      
 
-        public static bool UserExists(string username, int service)
+        public static bool UserExists(string username, int service = 0)
         {
             UserModel user = GetUser(username, service);
 
@@ -53,41 +54,7 @@ namespace FaFitu.DatabaseUtils
 
         }
 
-
-        /*public static bool AddUser(string username, string comesFrom, string password)
-        {
-            NpgsqlConnection conn = DataBaseConnection.GetConnection();
-            string operation = "INSERT INTO Users(uname, comesfrom, pass) VALUES";
-
-            Queue<string> q = new Queue<string>();
-
-            //Name
-            string unameS = UtilS.wrap(password);
-            q.Enqueue(unameS);
-
-            //ComesFrom
-            string comeS = UtilS.wrap(comesFrom);
-            q.Enqueue(unameS);
-
-            //Password
-            string passS = UtilS.wrap(password);
-            q.Enqueue(unameS);
-
-            string record = UtilS.map(q, ",");
-            record = UtilS.wrap("(", record, ")");
-
-            operation += record;
-
-            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
-
-            conn.Open();
-            int ret = Command.ExecuteNonQuery();
-            conn.Close();
-
-            return ret > 0;
-        }*/
-
-        public static bool AddUser(string username, int service, string password = null)
+        public static bool AddUser(string username, int service = 0, string password = null)
         {
             if(service == 0 && password == null) // i.e. native fafitu member without pass - sth wrong!
             {
@@ -121,6 +88,25 @@ namespace FaFitu.DatabaseUtils
 
             return ret > 0;
 
+        }
+
+        public static bool DeleteUser(string username, int service = 0) {
+
+            if (UserExists(username, service) == false) return false;
+
+            NpgsqlConnection conn = DataBaseConnection.GetConnection();
+            string operation = "DELETE FROM Users WHERE uname = " + UtilS.wrap(username) + " AND service = " + service.ToString();
+
+            // creating whole command
+
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
+
+
+            return ret > 0;
         }
 
       /*  public static bool UpdateUser(UserModel user, string OLDcomesfrom)
