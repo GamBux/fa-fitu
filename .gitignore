@@ -8,6 +8,7 @@
 *.sln.docstates
 *.cache
 *.pdb
+*.exe
 
 # User-specific folders
 *.sln.ide/
