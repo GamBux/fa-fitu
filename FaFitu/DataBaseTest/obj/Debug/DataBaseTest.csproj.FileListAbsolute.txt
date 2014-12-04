@@ -1,9 +1,0 @@
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\DataBaseTest.exe.config
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\DataBaseTest.exe
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\DataBaseTest.pdb
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\Mono.Security.dll
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\Npgsql.dll
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\policy.2.0.Npgsql.dll
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\bin\Debug\policy.2.0.Npgsql.config
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\obj\Debug\DataBaseTest.exe
-C:\Users\Piotr\Documents\Studia\zwinne\GIT\fa-fitu\FaFitu\DataBaseTest\obj\Debug\DataBaseTest.pdb
