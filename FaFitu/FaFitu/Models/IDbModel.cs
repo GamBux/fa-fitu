@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FaFitu.Models
 {
-    interface IDbModel
+    public interface IDbModel
     {
         bool IsFromDb { get; } // true iff Model was returned by a query
-        bool DirtyBit { get; } // true iff IsFromDb && state updated since query
+        bool DirtyBit { get; } // initially false, should be set if IsFromDb && state updated since query
 
         bool AddToDb();
         bool DeleteFromDb();
