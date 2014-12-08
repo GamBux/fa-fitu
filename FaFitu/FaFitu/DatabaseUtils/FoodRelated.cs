@@ -8,16 +8,16 @@ namespace FaFitu.DatabaseUtils
 {
     public class FoodRelated
     {
-        public HashSet<FoodModel> GetCustomFood(UserModel user)
+        public HashSet<DishModel> GetCustomFood(UserModel user)
         {
             // ask a database
-            return new HashSet<FoodModel>();
+            return new HashSet<DishModel>();
         }
 
-        public HashSet<FoodModel> GetDefaultFood()
+        public HashSet<DishModel> GetDefaultFood()
         {
             // ask a database
-            return new HashSet<FoodModel>();
+            return new HashSet<DishModel>();
         }
 
         public NutrientsModel GetNutrientsReceived(DateTime from)

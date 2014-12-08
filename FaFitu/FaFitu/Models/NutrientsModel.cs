@@ -11,9 +11,18 @@ namespace FaFitu.Models
         public double Carbons { get; set; }
         public double Fats { get; set; }
         
+        // really? we need it?
         public double Water { get; set; }
 
         public VitaminsModel Vitamins { get; set; }
+
+        // currently i dont care for the vitamins, so i'll be using this constructor:
+        public NutrientsModel(double proteins, double carbons, double fats)
+        {
+            Proteins = proteins;
+            Fats = fats;
+            Carbons = carbons;
+        }
 
         public NutrientsModel(double proteins, double carbons, double fats, VitaminsModel vitamins)
         {
@@ -23,14 +32,16 @@ namespace FaFitu.Models
             Carbons = carbons;
         }
 
-        public static NutrientsModel OfMany(IEnumerable<NutrientsModel> foods)
+        public static NutrientsModel OfMany(IEnumerable< Tuple<NutrientsModel, double> > foods)
         {
             return new NutrientsModel(
-                foods.Sum(nutr => nutr.Proteins),
-                foods.Sum(nutr => nutr.Carbons),
-                foods.Sum(nutr => nutr.Fats),
-                VitaminsModel.OfMany(foods.Select(nutr => nutr.Vitamins))
-                );
+                foods.Sum(pair => pair.Item2 * pair.Item1.Proteins),
+                foods.Sum(pair => pair.Item2 * pair.Item1.Proteins),
+                foods.Sum(pair => pair.Item2 * pair.Item1.Proteins)
+                
+                // not sure, how it should work, so lets leave it commented for now
+                //VitaminsModel.OfMany(foods.Select(nutr => nutr.Vitamins))
+            );
         }
     }
 }
