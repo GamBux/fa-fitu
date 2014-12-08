@@ -6,7 +6,7 @@ using FaFitu.Utils;
 
 namespace FaFitu.Models
 {
-
+    // TODO: should implement IDbModel
     public class UserModel
     {
         public enum Sex
