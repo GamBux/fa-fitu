@@ -18,6 +18,7 @@ namespace FaFitu.DatabaseUtils
         {
             // ask a database
             return new HashSet<IFoodModel>();
+
         }
 
         public NutrientsModel GetNutrientsReceived(DateTime from)
