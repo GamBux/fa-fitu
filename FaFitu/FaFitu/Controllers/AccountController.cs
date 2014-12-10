@@ -19,6 +19,24 @@ namespace FaFitu.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        IUsersRepository usersRepository;
+        bool ignoreAuth;
+
+        public AccountController()
+            : this(new UsersRepository())
+        { }
+
+        public AccountController(IUsersRepository iur)
+        {
+            usersRepository = iur;
+        }
+
+        public AccountController(IUsersRepository iur, bool ignoreAuth)
+        {
+            usersRepository = iur;
+            this.ignoreAuth = ignoreAuth;
+        }
+
         //
         // GET: /Account/Login
 
@@ -82,14 +100,17 @@ namespace FaFitu.Controllers
                 try
                 {
                     Console.WriteLine("register {0} , {1}", model.UserName, model.Password);
-                    if(UsersRelated.UserExists(model.UserName, UtilS.serviceToInt("email")))
+                    if (usersRepository.UserExists(model.UserName, UtilS.serviceToInt("email")))
                     {
                         Console.WriteLine("already exists!");
                     }
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    if (!ignoreAuth)
+                    {
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                        WebSecurity.Login(model.UserName, model.Password);
+                    }
 
-                    UsersRelated.AddUser(model.UserName, UtilS.serviceToInt("email"), model.Password);
+                    usersRepository.AddUser(model.UserName, UtilS.serviceToInt("email"), model.Password);
                    // UsersRelated.AddUser("email", model.UserName, model.Password);
 
                     return RedirectToAction("Index", "About");
@@ -280,7 +301,7 @@ namespace FaFitu.Controllers
                     {
                         MembershipTable user = db.MembershipTables.FirstOrDefault(u => u.UserName.ToLower() == providerUserId.ToLower()/* model.UserName.ToLower()*/);
 
-                        if (!UsersRelated.UserExists(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider)))
+                        if (!usersRepository.UserExists(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider)))
                         {
                             if(user != null)
                             {
@@ -290,7 +311,7 @@ namespace FaFitu.Controllers
                             db.SaveChanges();
 
 
-                            UsersRelated.AddUser(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider));
+                            usersRepository.AddUser(/*model.ExternalLoginData*/providerUserId, UtilS.serviceToInt(provider));
                             OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, /*model.UserName*/providerUserId);
                             OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 

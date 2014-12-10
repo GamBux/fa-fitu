@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FaFitu.DatabaseUtils
 {
-    public class FoodRelated
+    public class FoodRepository : IFoodRepository
     {
         public HashSet<IFoodModel> GetCustomFood(UserModel user)
         {

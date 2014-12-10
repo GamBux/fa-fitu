@@ -10,9 +10,9 @@ using FaFitu.Utils;
 
 namespace FaFitu.DatabaseUtils
 {
-    public class UsersRelated
+    public class UsersRepository : IUsersRepository
     {
-        public static UserModel GetUser(string username, int service = 0)
+        public UserModel GetUser(string username, int service = 0)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
 
@@ -45,7 +45,7 @@ namespace FaFitu.DatabaseUtils
         }
       
 
-        public static bool UserExists(string username, int service = 0)
+        public bool UserExists(string username, int service = 0)
         {
             UserModel user = GetUser(username, service);
 
@@ -54,7 +54,7 @@ namespace FaFitu.DatabaseUtils
 
         }
 
-        public static bool AddUser(string username, int service = 0, string password = null)
+        public bool AddUser(string username, int service = 0, string password = null)
         {
             if(service == 0 && password == null) // i.e. native fafitu member without pass - sth wrong!
             {
@@ -72,7 +72,7 @@ namespace FaFitu.DatabaseUtils
             return AddUser(um);
         }
 
-        public static bool AddUser(UserModel user)
+        public bool AddUser(UserModel user)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
             string operation = "INSERT INTO Users" + UserModel.getFormatedFields() +"VALUES " + user.getFormatedValues();
@@ -90,7 +90,8 @@ namespace FaFitu.DatabaseUtils
 
         }
 
-        public static bool DeleteUser(string username, int service = 0) {
+        public bool DeleteUser(string username, int service = 0)
+        {
 
             if (UserExists(username, service) == false) return false;
 

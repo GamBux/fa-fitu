@@ -206,15 +206,20 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\UserPanelController.cs" />
     <Compile Include="DatabaseUtils\DataBaseConnection.cs" />
-    <Compile Include="DatabaseUtils\UsersRelated.cs" />
+    <Compile Include="DatabaseUtils\IFoodRepository.cs" />
+    <Compile Include="DatabaseUtils\IUsersRepository.cs" />
+    <Compile Include="DatabaseUtils\UsersRepository.cs" />
     <Compile Include="DatabaseUtils\UtilS.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseUtils\FoodRelated.cs" />
+    <Compile Include="DatabaseUtils\FoodRepository.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\FoodModel.cs" />
+    <Compile Include="Models\DishModel.cs" />
+    <Compile Include="Models\GroundFoodModel.cs" />
+    <Compile Include="Models\IDbModel.cs" />
+    <Compile Include="Models\IFoodModel.cs" />
     <Compile Include="Models\NutrientsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VitaminsModel.cs" />
