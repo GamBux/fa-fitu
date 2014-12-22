@@ -208,6 +208,7 @@
     <Compile Include="DatabaseUtils\DataBaseConnection.cs" />
     <Compile Include="DatabaseUtils\IFoodRepository.cs" />
     <Compile Include="DatabaseUtils\IUsersRepository.cs" />
+    <Compile Include="DatabaseUtils\RepositoryExceptions.cs" />
     <Compile Include="DatabaseUtils\UsersRepository.cs" />
     <Compile Include="DatabaseUtils\UtilS.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />

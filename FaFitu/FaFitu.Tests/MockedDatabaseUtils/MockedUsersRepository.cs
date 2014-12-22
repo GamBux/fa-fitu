@@ -3,49 +3,110 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FaFitu.Models;
+using FaFitu.DatabaseUtils;
 
 namespace FaFitu.Tests.MockedDatabaseUtils
 {
     class MockedUsersRepository : FaFitu.DatabaseUtils.IUsersRepository
     {
-        List<Models.UserModel> users;
+        List<UserModel> users;
+        int count;
 
         public MockedUsersRepository()
         {
-            users = new List<Models.UserModel>();
+            users = new List<UserModel>();
+            count = 0;
         }
 
-        public Models.UserModel GetUser(string username, int service = 0)
+        public UserModel GetUser(string username, int service = 0)
         {
-            return users.Find(m => m.uname.Equals(username) && m.service == service);
+            if(UserExists(username, service))
+            {
+                return users.Find(m => m.Name.Equals(username) && m.Service == service);
+            }
+            else
+            {
+                throw new RepositoryExceptions.UsersRepositoryException(
+                    String.Format("Couldn't find a user with username={0} and service={1}", username, service));
+            }
+        }
+
+        public UserModel GetUser(int id)
+        {
+            if(UserExists(id))
+            {
+                return users.Find(m => m.Id == id);
+            }
+            else
+            {
+                throw new RepositoryExceptions.UsersRepositoryException(
+                    String.Format("Couldn't find a user with id={0} and service={1}", id));
+            }
         }
 
         public bool UserExists(string username, int service = 0)
         {
-            return users.Any(m => m.uname.Equals(username));
+            return users.Any(m => m.Name.Equals(username) && m.Service == service);
         }
 
-        public bool AddUser(string username, int service = 0, string password = null)
+        protected bool UserExists(int id)
         {
-            users.Add(new Models.UserModel { uname = username, service = service, pass = password });
-            return true;
+            return users.Any(m => m.Id == id);
         }
 
-        public bool AddUser(Models.UserModel user)
+        public int AddUser(string username, int service = 0, string password = null)
         {
-            users.Add(user);
-            return true;
+            if(UserExists(username, service))
+            {
+                throw new FaFitu.DatabaseUtils.RepositoryExceptions.UsersRepositoryException(
+                    String.Format("User with username={0} and service={1} already exists", username, service));
+            }
+            else
+            {
+                var nu = UserModel.FactoryMethod(username, service, password, count);
+                    //new UserModel(username, service, password);
+                count++;
+                users.Add(nu);
+                return (int)nu.Id;
+            }
+            
+        }
+
+        public int AddUser(Models.UserModel user)
+        {
+            return AddUser(user.Name, user.Service, user.Password);
         }
 
         public bool DeleteUser(string username, int service = 0)
         {
             if(UserExists(username, service))
             {
-                // need to check how equality is tested
-                //users.Remove()
-                return true;
+                int deleted = users.RemoveAll(m => username.Equals(m.Name) && service == m.Service);
+                return deleted > 0;
             }
             return false;
+        }
+
+        public bool DeleteUser(int id)
+        {
+            if (UserExists(id))
+            {
+                int deleted = users.RemoveAll(m => id == m.Id);
+                return deleted > 0;
+            }
+            return false;
+        }
+
+
+        public NutrientsModel GetNutrientsReceived(DateTime from)
+        {
+            throw new NotImplementedException();
+        }
+
+        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
         }
     }
 }
