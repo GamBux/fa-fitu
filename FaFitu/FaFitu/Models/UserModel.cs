@@ -9,9 +9,27 @@ namespace FaFitu.Models
 
     public class UserModel : IDbModel, IEquatable<UserModel>
     {
-        public UserModel(string name, int service, string password, string email = null)
+        public UserModel() {
+            IsFromDb = false;
+        }
+
+        public void SetId(int id){
+            Id = id;
+        }
+        public UserModel(string name, int service, string password, string email = null, int? id = null)
         {
-            Id = null;
+            /*
+            uid 		serial PRIMARY KEY,
+	        uname 		varchar NOT NULL,
+	        email		varchar UNIQUE,
+	        pass		varchar,
+	        mass 		int,
+	        activity 	int,
+	        age 		int,
+	        caloriesTarget int,
+	        service int NOT NULL DEFAULT 0,
+             */
+            Id = id;
             IsFromDb = false;
             Name = name;
             Service = service;
@@ -113,10 +131,10 @@ namespace FaFitu.Models
         }
         // i recommend database abstraction class to implement such methods
 
-        //public override string ToString()
-        //{
-        //    return String.Format("uname:{0}, email:{1}, pass:{2}, mass:{3}, activity:{4}, age:{5}, caloriesTarget:{6}, service:{7}", uname, email, pass, mass, activity, age, caloriesTarget, service);
-        //}
+        public override string ToString()
+        {
+            return String.Format("uname:{0}, email:{1}, pass:{2}, mass:{3}, activity:{4}, age:{5}, caloriesTarget:{6}, service:{7}", Name, Email, Password, Mass, Activity, Age, CaloriesTarget, Service);
+        }
 
         //public static string getFormatedFields() {
         //    return "(uname, email, pass, mass, activity, age, caloriesTarget, service)";

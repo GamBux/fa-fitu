@@ -29,9 +29,14 @@ namespace FaFitu.Utils
         }
 
         // pls change the name of this method
-        public static string maybeIntToS(int a)
+        //public static string maybeIntToS(int a)
+        //{
+        //    if (a == -1) return "NULL";
+        //    else return a.ToString();
+        //}
+        public static string maybeIntToS(int? a)
         {
-            if (a == -1) return "NULL";
+            if (a == null) return "NULL";
             else return a.ToString();
         }
         public static string ifEmptyThenNull(string s)

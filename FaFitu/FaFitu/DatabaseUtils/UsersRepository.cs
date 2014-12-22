@@ -27,15 +27,15 @@ namespace FaFitu.DatabaseUtils
             while (rd.Read()) {
                 isResult = true;
                 int i = 0;
-                user.uid			= (int)rd[i++];
-                user.uname          = UtilS.possibleNullObjectToString(rd[i++]);
-                user.email          = UtilS.possibleNullObjectToString(rd[i++]);
-                user.pass           = UtilS.possibleNullObjectToString(rd[i++]);
-                user.mass           = UtilS.possibleNullObjectToInt(rd[i++]);
-                user.activity       = UtilS.possibleNullObjectToInt(rd[i++]);
-                user.age            = UtilS.possibleNullObjectToInt(rd[i++]);
-                user.caloriesTarget = UtilS.possibleNullObjectToInt(rd[i++]);
-                user.service        = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.SetId((int)rd[i++]);
+                user.Name          = UtilS.possibleNullObjectToString(rd[i++]);
+                user.Email          = UtilS.possibleNullObjectToString(rd[i++]);
+                user.Password           = UtilS.possibleNullObjectToString(rd[i++]);
+                user.Mass           = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.Activity       = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.Age            = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.CaloriesTarget = UtilS.possibleNullObjectToInt(rd[i++]);
+                user.Service        = UtilS.possibleNullObjectToInt(rd[i++]);
             }
             conn.Close();
 
@@ -61,13 +61,13 @@ namespace FaFitu.DatabaseUtils
                 return false;
             }
             var um = new UserModel();
-            um.activity = -1;
-            um.age = -1;
-            um.caloriesTarget = -1;
-            um.email = null;
-            um.service = service;
-            um.uname = UtilS.ifEmptyThenNull(username);//UtilS.possibleNullObjectToString(username);
-            um.pass = UtilS.ifEmptyThenNull(password);
+            um.Activity = -1;
+            um.Age = -1;
+            um.CaloriesTarget = -1;
+            um.Email = null;
+            um.Service = service;
+            um.Name = UtilS.ifEmptyThenNull(username);//UtilS.possibleNullObjectToString(username);
+            um.Password = UtilS.ifEmptyThenNull(password);
 
             return AddUser(um);
         }
@@ -75,7 +75,7 @@ namespace FaFitu.DatabaseUtils
         public bool AddUser(UserModel user)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
-            string operation = "INSERT INTO Users" + UserModel.getFormatedFields() +"VALUES " + user.getFormatedValues();
+            string operation = "INSERT INTO Users" + PrettyPrinterUser.getFormatedFields() +"VALUES " + PrettyPrinterUser.getFormatedValues(user);
             
             // creating whole command
            
@@ -167,6 +167,42 @@ namespace FaFitu.DatabaseUtils
             return ret > 0;
 
         }*/
-        
+
+
+
+        public UserModel GetUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IUsersRepository.AddUser(string username, int service = 0, string password = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IUsersRepository.AddUser(UserModel user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteUser(UserModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateUser(UserModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public NutrientsModel GetNutrientsReceived(DateTime from)
+        {
+            throw new NotImplementedException();
+        }
+
+        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

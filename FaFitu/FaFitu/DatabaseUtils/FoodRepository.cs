@@ -37,5 +37,25 @@ namespace FaFitu.DatabaseUtils
         {
             throw new NotImplementedException();
         }
+
+        public int AddGroundFood(GroundFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddDish(DishModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateFood(IFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteFood(IFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

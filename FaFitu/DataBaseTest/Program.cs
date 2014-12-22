@@ -15,19 +15,20 @@ namespace DataBaseTest
         static void Main(string[] args)
         {
             UserModel user = new UserModel();
+            UsersRepository tester = new UsersRepository();
 
             
-            user.uname			= "Ada";
-            user.email			= "Ada.Ramirez@gamil.com";
-            user.pass			= "MySuperPass";
-            user.mass			= 65;
-            user.activity		= 100;
-            user.age			= 45;
-            user.caloriesTarget	= 2000;
-            if (UsersRelated.UserExists("Ada") == false) UsersRelated.AddUser(user);
-            UsersRelated.DeleteUser("Ada", 0);
-            UsersRelated.AddUser(user);
-            UserModel user2 = UsersRelated.GetUser("Ada", 0);
+            user.Name			= "Ada";
+            user.Email			= "Ada.Ramirez@gamil.com";
+            user.Password			= "MySuperPass";
+            user.Mass			= 65;
+            user.Activity		= 100;
+            user.Age			= 45;
+            user.CaloriesTarget	= 2000;
+            if (tester.UserExists("Ada") == false) tester.AddUser(user);
+            tester.DeleteUser("Ada", 0);
+            tester.AddUser(user);
+            UserModel user2 = tester.GetUser("Ada", 0);
 
         }
     }
