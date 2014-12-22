@@ -3,43 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FaFitu.Models;
+using FaFitu.DatabaseUtils;
 
 namespace FaFitu.Tests.MockedDatabaseUtils
 {
     class MockedUsersRepository : FaFitu.DatabaseUtils.IUsersRepository
     {
-        List<Models.UserModel> users;
+        List<UserModel> users;
 
         public MockedUsersRepository()
         {
-            users = new List<Models.UserModel>();
+            users = new List<UserModel>();
         }
 
-        public Models.UserModel GetUser(string username, int service = 0)
+        public UserModel GetUser(string username, int service = 0)
         {
-            return users.Find(m => m.uname.Equals(username) && m.service == service);
+            if(UserExists(username, service))
+            {
+                return users.Find(m => m.Name.Equals(username) && m.Service == service);
+            }
+            else
+            {
+                throw new RepositoryExceptions.UsersRepositoryException(
+                    String.Format("Couldn't find a user with username={0} and service={1}", username, service));
+            }
+        }
+
+        public UserModel GetUser(int id)
+        {
+            if(UserExists(id))
+            {
+                return users.Find(m => m.Id == id);
+            }
+            else
+            {
+                throw new RepositoryExceptions.UsersRepositoryException(
+                    String.Format("Couldn't find a user with id={0} and service={1}", id));
+            }
         }
 
         public bool UserExists(string username, int service = 0)
         {
-            return users.Any(m => m.uname.Equals(username) && m.service == service);
+            return users.Any(m => m.Name.Equals(username) && m.Service == service);
         }
 
-        public bool AddUser(string username, int service = 0, string password = null)
+        protected bool UserExists(int id)
+        {
+            return users.Any(m => m.Id == id);
+        }
+
+        public int AddUser(string username, int service = 0, string password = null)
         {
             if(UserExists(username, service))
             {
-                return false;
+                throw new FaFitu.DatabaseUtils.RepositoryExceptions.UsersRepositoryException(
+                    String.Format("User with username={0} and service={1} already exists", username, service));
             }
             else
             {
-                users.Add(new Models.UserModel { uname = username, service = service, pass = password });
+                users.Add(new UserModel(username, service, password));
                 return true;
             }
             
         }
 
-        public bool AddUser(Models.UserModel user)
+        public int AddUser(Models.UserModel user)
         {
             return AddUser(user.uname, user.service, user.pass);
         }

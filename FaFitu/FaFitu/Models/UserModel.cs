@@ -9,13 +9,14 @@ namespace FaFitu.Models
 
     public class UserModel : IDbModel, IEquatable<UserModel>
     {
-        public UserModel(string name,string email, string password)
+        public UserModel(string name, int service, string password, string email = null)
         {
             Id = null;
             IsFromDb = false;
             Name = name;
-            Email = email;
+            Service = service;
             Password = password;
+            Email = email;
         }
 
         // do we need this?
@@ -66,7 +67,9 @@ namespace FaFitu.Models
             set { CaloriesTarget = value; DirtyBit = true; }
         }
 
-        protected int service { get; set; }
+        public int Service { get;
+            set { Service = value; DirtyBit = true; }
+        }
 
         public int? Id { get; protected set; }
 
