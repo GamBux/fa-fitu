@@ -19,6 +19,13 @@ namespace FaFitu.Models
             Email = email;
         }
 
+        public static UserModel FactoryMethod(string name, int service, string password, int id, string email = null)
+        {
+            var nu = new UserModel(name, service, password, email);
+            nu.Id = id;
+            return nu;
+        }
+
         // do we need this?
         public enum Sex
         {

@@ -11,10 +11,12 @@ namespace FaFitu.Tests.MockedDatabaseUtils
     class MockedUsersRepository : FaFitu.DatabaseUtils.IUsersRepository
     {
         List<UserModel> users;
+        int count;
 
         public MockedUsersRepository()
         {
             users = new List<UserModel>();
+            count = 0;
         }
 
         public UserModel GetUser(string username, int service = 0)
@@ -62,15 +64,18 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             }
             else
             {
-                users.Add(new UserModel(username, service, password));
-                return true;
+                var nu = UserModel.UserFactory(username, service, password, count);
+                    //new UserModel(username, service, password);
+                count++;
+                users.Add(nu);
+                return (int)nu.Id;
             }
             
         }
 
         public int AddUser(Models.UserModel user)
         {
-            return AddUser(user.uname, user.service, user.pass);
+            return AddUser(user.Name, user.Service, user.Password);
         }
 
         public bool DeleteUser(string username, int service = 0)
