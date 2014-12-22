@@ -25,7 +25,7 @@ namespace FaFitu.DatabaseUtils
         int AddUser(UserModel user);
 
         bool DeleteUser(string username, int service = 0);
-        bool DeleteUser(int id);
+        bool DeleteUser(UserModel user);
 
         NutrientsModel GetNutrientsReceived(DateTime from);
         NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
