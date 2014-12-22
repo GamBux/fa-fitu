@@ -6,7 +6,7 @@ using FaFitu.Utils;
 
 namespace FaFitu.Models
 {
-    public class UserModel : IDbModel
+public class UserModel : IDbModel
     {
         public UserModel(string name,string email, string password)
         {
