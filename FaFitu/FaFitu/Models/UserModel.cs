@@ -103,7 +103,11 @@ namespace FaFitu.Models
 
         public bool Equals(UserModel other)
         {
-            return Id == other.Id;
+            if(Id != null && other.Id != null)
+            {
+                return Id == other.Id;
+            }
+            return Name.Equals(other.Name) && Service == other.Service;
         }
         // i recommend database abstraction class to implement such methods
 

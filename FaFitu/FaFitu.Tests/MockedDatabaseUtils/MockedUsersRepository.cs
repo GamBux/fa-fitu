@@ -64,7 +64,7 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             }
             else
             {
-                var nu = UserModel.UserFactory(username, service, password, count);
+                var nu = UserModel.FactoryMethod(username, service, password, count);
                     //new UserModel(username, service, password);
                 count++;
                 users.Add(nu);
@@ -82,20 +82,29 @@ namespace FaFitu.Tests.MockedDatabaseUtils
         {
             if(UserExists(username, service))
             {
-                // need to check how equality is tested
-                //users.Remove()
-                return true;
+                int deleted = users.RemoveAll(m => username.Equals(m.Name) && service == m.Service);
+                return deleted > 0;
+            }
+            return false;
+        }
+
+        public bool DeleteUser(int id)
+        {
+            if (UserExists(id))
+            {
+                int deleted = users.RemoveAll(m => id == m.Id);
+                return deleted > 0;
             }
             return false;
         }
 
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from)
+        public NutrientsModel GetNutrientsReceived(DateTime from)
         {
             throw new NotImplementedException();
         }
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }
