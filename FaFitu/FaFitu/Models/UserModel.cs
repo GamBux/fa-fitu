@@ -7,14 +7,13 @@ using FaFitu.Utils;
 namespace FaFitu.Models
 {
     // TODO: should implement IDbModel
-    public class UserModel
+    public class UserModel : IDbModel
     {
         public enum Sex
         {
             MALE, FEMALE, UNDEFINEDLOL
         }
-
-        public int uid  { get; set; }
+       // public int uid  { get; set; }
         public string uname { get; set; }
         public string email { get; set; }
         public string pass { get; set; }
@@ -73,6 +72,43 @@ namespace FaFitu.Models
             record = UtilS.wrap("(", record, ")");
 
             return record;
+        }
+
+        public bool IsFromDb
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool DirtyBit
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int? Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool AddToDb()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteFromDb()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateInDb()
+        {
+            throw new NotImplementedException();
         }
     }
 }
