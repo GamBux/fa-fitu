@@ -11,6 +11,7 @@ namespace FaFitu.Models
     {
         public DishModel(string name, params Tuple<IFoodModel, double>[] ingredients)
         {
+            Id = null;
             IsFromDb = false;
             Name = name;
             Ingredients = new HashSet<Tuple<IFoodModel, double>>(ingredients);
@@ -40,6 +41,8 @@ namespace FaFitu.Models
         public NutrientsModel Nutrients {
             get { return NutrientsModel.OfMany(Ingredients.Select(pair => new Tuple<NutrientsModel,double>(pair.Item1.Nutrients,pair.Item2))); }
         }
+
+        public int? Id { get; protected set; }
 
         public bool IsFromDb { get; protected set; }
 

@@ -10,6 +10,7 @@ namespace FaFitu.Models
         // Constructor for ground food
         public GroundFoodModel(string name, NutrientsModel nutrients)
         {
+            Id = null;
             IsFromDb = false;
             Name = name;
             Nutrients = nutrients;
@@ -32,6 +33,8 @@ namespace FaFitu.Models
             get { return Nutrients; }
             set { Nutrients = value; DirtyBit = true; }
         }
+
+        public int? Id { get; protected set; }
 
         public bool IsFromDb { get; protected set; }
 
