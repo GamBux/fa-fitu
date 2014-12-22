@@ -15,7 +15,7 @@ namespace FaFitu.Utils
     {
         public static string wrap(string a)
         {
-            if (a == null)
+           if (a == null)
                 return "NULL";
             return wrap("'", a, "'");
         }
