@@ -65,7 +65,6 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             else
             {
                 var nu = UserModel.FactoryMethod(username, service, password, count);
-                    //new UserModel(username, service, password);
                 count++;
                 users.Add(nu);
                 return (int)nu.Id;
@@ -88,14 +87,19 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             return false;
         }
 
-        public bool DeleteUser(int id)
+        public bool DeleteUser(UserModel user)
         {
-            if (UserExists(id))
+            if (user.Id != null)
             {
-                int deleted = users.RemoveAll(m => id == m.Id);
-                return deleted > 0;
+                if (UserExists((int)user.Id))
+                {
+                    int deleted = users.RemoveAll(m => (int)user.Id == m.Id);
+                    return deleted > 0;
+                }
+                else
+                    return false;
             }
-            return false;
+            return DeleteUser(user.Name, user.Service);
         }
 
 
