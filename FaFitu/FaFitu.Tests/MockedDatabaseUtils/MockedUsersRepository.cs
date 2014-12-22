@@ -11,10 +11,12 @@ namespace FaFitu.Tests.MockedDatabaseUtils
     class MockedUsersRepository : FaFitu.DatabaseUtils.IUsersRepository
     {
         List<UserModel> users;
+        int count;
 
         public MockedUsersRepository()
         {
             users = new List<UserModel>();
+            count = 0;
         }
 
         public UserModel GetUser(string username, int service = 0)
@@ -62,35 +64,47 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             }
             else
             {
-                users.Add(new UserModel(username, service, password));
-                return true;
+                var nu = UserModel.FactoryMethod(username, service, password, count);
+                    //new UserModel(username, service, password);
+                count++;
+                users.Add(nu);
+                return (int)nu.Id;
             }
             
         }
 
         public int AddUser(Models.UserModel user)
         {
-            return AddUser(user.uname, user.service, user.pass);
+            return AddUser(user.Name, user.Service, user.Password);
         }
 
         public bool DeleteUser(string username, int service = 0)
         {
             if(UserExists(username, service))
             {
-                // need to check how equality is tested
-                //users.Remove()
-                return true;
+                int deleted = users.RemoveAll(m => username.Equals(m.Name) && service == m.Service);
+                return deleted > 0;
+            }
+            return false;
+        }
+
+        public bool DeleteUser(int id)
+        {
+            if (UserExists(id))
+            {
+                int deleted = users.RemoveAll(m => id == m.Id);
+                return deleted > 0;
             }
             return false;
         }
 
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from)
+        public NutrientsModel GetNutrientsReceived(DateTime from)
         {
             throw new NotImplementedException();
         }
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }

@@ -10,27 +10,32 @@ namespace FaFitu.DatabaseUtils
     {
         public HashSet<IFoodModel> GetCustomFood(UserModel user)
         {
-            // ask a database
-            return new HashSet<IFoodModel>();
+            throw new NotImplementedException();
         }
 
         public HashSet<IFoodModel> GetDefaultFood()
         {
-            // ask a database
-            return new HashSet<IFoodModel>();
-
+            throw new NotImplementedException();
         }
 
-        public NutrientsModel GetNutrientsReceived(DateTime from)
+        public IFoodModel GetFoodById(int id)
         {
-            return GetNutrientsReceived(from, DateTime.Now);
+            throw new NotImplementedException();
         }
 
-        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public HashSet<IFoodModel> GetFoodsWithSubsequenceInName(string partial_name)
         {
-            return new NutrientsModel(0, 0, 0, 
-                new VitaminsModel(
-                    new Dictionary<VitaminsModel.VitaminsNames, double>()));
+            throw new NotImplementedException();
+        }
+
+        public HashSet<IFoodModel> GetAllGroundFoods()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<IFoodModel> GetAllDishes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

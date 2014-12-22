@@ -19,6 +19,13 @@ namespace FaFitu.Models
             Email = email;
         }
 
+        public static UserModel FactoryMethod(string name, int service, string password, int id, string email = null)
+        {
+            var nu = new UserModel(name, service, password, email);
+            nu.Id = id;
+            return nu;
+        }
+
         // do we need this?
         public enum Sex
         {
@@ -98,7 +105,11 @@ namespace FaFitu.Models
 
         public bool Equals(UserModel other)
         {
-            return Id == other.Id;
+            if(Id != null && other.Id != null)
+            {
+                return Id == other.Id;
+            }
+            return Name.Equals(other.Name) && Service == other.Service;
         }
         // i recommend database abstraction class to implement such methods
 
