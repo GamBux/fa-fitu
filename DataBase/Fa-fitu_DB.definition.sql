@@ -47,7 +47,8 @@ CREATE TABLE Food(
 	proteins 	int 		DEFAULT 0,
 	isGround 	bool 		NOT NULL,
 	description text		DEFAULT 'Empty Description',
-	recipe		text		DEFAULT 'To fully grow such a deliciuos...'
+	recipe		text		DEFAULT 'To fully grow such a deliciuos...',
+	weightSoFar	int 		DEFAULT 0
 )
 ;
 
@@ -81,34 +82,61 @@ END
 $x$	LANGUAGE plpgsql
 ;
 
-insert into Food(fname, carbons, fats, proteins, description, isGround) VALUES
-	('Pomidor', 12, 13, 14, 'Jaki dorodny!', true),
-	('Makaron', 1, 2, 3, 'Jaki długi!', true),
-	('Parmezan', 7, 3, 1, 'Jaki serowy!', true),
-	('Marchew', 6, 3, 1, 'Jaka twarda!', true),
-	('Seler', 3, 1, 3, 'Jakie to dziwne!', true)
+
+DROP TRIGGER IF EXISTS T_Update_Food_Calories_Ins_IsMadeOf ON IsMadeOf;
+
+CREATE OR REPLACE FUNCTION TF_Update_Food_Calories_Ins_IsMadeOf() RETURNS TRIGGER
+AS $x$
+DECLARE
+	upFood Food;
+	upPart Food;
+	newCarbon int;
+	newProtein int;
+	newFat int;
+	newWeight int;
+BEGIN
+	SELECT INTO upFood Food.* FROM Food WHERE Food.fid = NEW.dfid;
+	SELECT INTO upPart Food.* FROM Food WHERE Food.fid = NEW.ffid;
+	newWeight 	=	upFood.weightSoFar + NEW.weight; 
+	newFat 		=	(upFood.fats 	* upFood.weightSoFar + upPart.fats		* NEW.weight )	/ newWeight; 
+	newProtein 	= 	(upFood.proteins* upFood.weightSoFar + upPart.proteins 	* NEW.weight )	/ newWeight;
+	newCarbon 	= 	(upFood.carbons * upFood.weightSoFar + upPart.carbons 	* NEW.weight )	/ newWeight;
+	UPDATE Food 
+		SET (carbons,fats,proteins,weightSoFar) = (newCarbon, newFat, newProtein, newWeight)
+		WHERE fid = NEW.dfid
+	;
+	RETURN NEW;
+END
+$x$	LANGUAGE plpgsql
+;
+
+CREATE TRIGGER T_Update_Food_Calories_Ins_IsMadeOf
+AFTER INSERT
+ON IsMadeOf
+FOR EACH ROW
+EXECUTE PROCEDURE TF_Update_Food_Calories_Ins_IsMadeOf()
+;
+
+insert into Food(fname, proteins, carbons, fats, description, isGround) VALUES
+	('Pomidor', 14, 2, 4, 'Jaki dorodny!', true),
+	('Makaron', 13*4, 69*4, 2*9, 'Jaki długi!', true),
+	('Parmezan', 33*4, 0*4, 28*9, 'Jaki serowy!', true),
+	('Marchew', 1*4, 5*4, 1*9, 'Jaka twarda!', true),
+	('Seler', 2*4, 8*4, 1*9, 'Jakie to dziwne!', true),
+	('Mięcho', 17*4, 8*4, 22*9, 'Mięsne', true)
+
 ;
 	
 insert into Food(fname,  description, isGround) VALUES
 	('Spaghetti', 'Gorlami!', false)
 ;
 
-select InsertIsMadeOf('Spaghetti', 'Pamidor', 50);
+select InsertIsMadeOf('Spaghetti', 'Pomidor', 200);
 select InsertIsMadeOf('Spaghetti', 'Makaron', 150);
 select InsertIsMadeOf('Spaghetti', 'Parmezan', 20);
 select InsertIsMadeOf('Spaghetti', 'Marchew', 120);
 select InsertIsMadeOf('Spaghetti', 'Seler', 125);
-
-
-
-/*insert into IsPart(dname, fname, quantity) VALUES
-	('Spaghetti', 	'Pomidor', 5),
-	('Spaghetti',	'Makaron', 2),
-	('Spaghetti',	'Parmezan', 10),
-	('Spaghetti',	'Marchew', 1),
-	('Spaghetti',	'Seler', 1)
-;
-
+select InsertIsMadeOf('Spaghetti', 'Mięcho', 225);
 
 
 insert into Users(uname, email, pass, mass, activity, age, caloriesTarget) VALUES
@@ -123,18 +151,3 @@ insert into Users(uname, email, pass, activity, age, caloriesTarget) VALUES
 insert into Users(uname, pass, mass, activity, age, caloriesTarget) VALUES
 	('Webless','I have no email', 50, 0, 22, 2500)
 ;
-
-insert into Eaten(uid, fname, quantity, dat) VALUES
-	(1, 'Spaghetti', 5, DEFAULT),
-	(2, 'Spaghetti', 2, '10-11-14')
-;
-
-insert into Food(fname, uid, info, isGround) VALUES
-('Sałatka', 1, 'mniam', false)
-;
-
-insert into IsPart(dname, fname, quantity) VALUES
-('Sałatka','Marchew',1),
-('Sałatka','Seler',2)
-;
-*/
