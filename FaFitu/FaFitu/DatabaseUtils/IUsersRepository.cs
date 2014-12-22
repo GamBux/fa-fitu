@@ -10,10 +10,24 @@ namespace FaFitu.DatabaseUtils
     public interface IUsersRepository
     {
         UserModel GetUser(string username, int service = 0);
+        UserModel GetUser(int id);
         bool UserExists(string username, int service = 0);
-        bool AddUser(string username, int service = 0, string password = null);
-        bool AddUser(UserModel user);
-        bool DeleteUser(string username, int service = 0);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="service"></param>
+        /// <param name="password"></param>
+        /// <exception cref="UsersRepositoryException">Thrown when couldn't add a new user</exception>
+        /// <returns>int being an id of a newly added user</returns>
+        int AddUser(string username, int service = 0, string password = null);
+        int AddUser(UserModel user);
+
+        bool DeleteUser(string username, int service = 0);
+        bool DeleteUser(int id);
+
+        NutrientsModel GetNutrientsReceived(DateTime from);
+        NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
     }
 }

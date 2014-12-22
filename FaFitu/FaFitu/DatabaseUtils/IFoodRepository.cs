@@ -11,7 +11,11 @@ namespace FaFitu.DatabaseUtils
     {
         HashSet<IFoodModel> GetCustomFood(UserModel user);
         HashSet<IFoodModel> GetDefaultFood();
-        NutrientsModel GetNutrientsReceived(DateTime from);
-        NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
+       // NutrientsModel GetNutrientsReceived(DateTime from);
+       // NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
+        IFoodModel GetFoodById(int id);
+        HashSet<IFoodModel> GetFoodsWithSubsequenceInName(string partial_name);
+        HashSet<IFoodModel> GetAllGroundFoods();
+        HashSet<IFoodModel> GetAllDishes();
     }
 }

@@ -7,13 +7,13 @@ using FaFitu.Utils;
 namespace FaFitu.Models
 {
     // TODO: should implement IDbModel
-    public class UserModel : IDbModel
+    public class UserModel : IDbModel, IEquatable<UserModel>
     {
         public enum Sex
         {
             MALE, FEMALE, UNDEFINEDLOL
         }
-       // public int uid  { get; set; }
+        public int uid  { get; set; }
         public string uname { get; set; }
         public string email { get; set; }
         public string pass { get; set; }
@@ -109,6 +109,11 @@ namespace FaFitu.Models
         public bool UpdateInDb()
         {
             throw new NotImplementedException();
+        }
+
+        public bool Equals(UserModel other)
+        {
+            return Id == other.Id;
         }
     }
 }

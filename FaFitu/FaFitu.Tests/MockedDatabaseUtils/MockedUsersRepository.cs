@@ -22,19 +22,26 @@ namespace FaFitu.Tests.MockedDatabaseUtils
 
         public bool UserExists(string username, int service = 0)
         {
-            return users.Any(m => m.uname.Equals(username));
+            return users.Any(m => m.uname.Equals(username) && m.service == service);
         }
 
         public bool AddUser(string username, int service = 0, string password = null)
         {
-            users.Add(new Models.UserModel { uname = username, service = service, pass = password });
-            return true;
+            if(UserExists(username, service))
+            {
+                return false;
+            }
+            else
+            {
+                users.Add(new Models.UserModel { uname = username, service = service, pass = password });
+                return true;
+            }
+            
         }
 
         public bool AddUser(Models.UserModel user)
         {
-            users.Add(user);
-            return true;
+            return AddUser(user.uname, user.service, user.pass);
         }
 
         public bool DeleteUser(string username, int service = 0)
@@ -46,6 +53,17 @@ namespace FaFitu.Tests.MockedDatabaseUtils
                 return true;
             }
             return false;
+        }
+
+
+        public Models.NutrientsModel GetNutrientsReceived(DateTime from)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
         }
     }
 }
