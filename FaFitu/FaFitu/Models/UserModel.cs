@@ -43,31 +43,33 @@ namespace FaFitu.Models
             set { Password = value; DirtyBit = true; }
         }
 
-        public int Mass // in kg
+        public int? Mass // in kg
         {
             get { return Mass; }
             set { Mass = value; DirtyBit = true; }
         }
 
-        public int Activity // whatever it means
+        public int? Activity // whatever it means
         {
             get { return Activity; }
             set { Activity = value; DirtyBit = true; }
         }
         
-        public int Age
+        public int? Age
         {
             get { return Age; }
             set { Age = value; DirtyBit = true; }
         }
 
-        public int CaloriesTarget // calories/day
+        public int? CaloriesTarget // calories/day
         {
             get { return CaloriesTarget; }
             set { CaloriesTarget = value; DirtyBit = true; }
         }
 
-        public int Service { get;
+        public int Service
+        {
+            get { return Service; }
             set { Service = value; DirtyBit = true; }
         }
 
