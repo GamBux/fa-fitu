@@ -13,8 +13,7 @@ namespace FaFitu.Models
         [Required]
         [Display(Name = "Name of food")]
         string Name { get; set; }
-
-        string Description {get; set; }
+        string Description { get; set; }
 
         NutrientsModel Nutrients { get; }
     }
