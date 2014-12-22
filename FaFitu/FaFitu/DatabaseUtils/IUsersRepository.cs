@@ -13,6 +13,8 @@ namespace FaFitu.DatabaseUtils
         UserModel GetUser(int id);
         bool UserExists(string username, int service = 0);
 
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -21,11 +23,14 @@ namespace FaFitu.DatabaseUtils
         /// <param name="password"></param>
         /// <exception cref="UsersRepositoryException">Thrown when couldn't add a new user</exception>
         /// <returns>int being an id of a newly added user</returns>
-        int AddUser(string username, int service = 0, string password = null);
-        int AddUser(UserModel user);
+        int AddUser(string username, int service = 0, string password = null); // returns id
+        int AddUser(UserModel user); // returns id
+
+        bool DeleteUser(UserModel m);
 
         bool DeleteUser(string username, int service = 0);
         bool DeleteUser(UserModel user);
+        int UpdateUser(UserModel m);
 
         NutrientsModel GetNutrientsReceived(DateTime from);
         NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
