@@ -10,6 +10,7 @@ namespace FaFitu.Models
     {
         bool IsFromDb { get; } // true iff Model was returned by a query
         bool DirtyBit { get; } // initially false, should be set if IsFromDb && state updated since query
+        int? Id { get; set; }
 
         bool AddToDb();
         bool DeleteFromDb();
