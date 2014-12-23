@@ -50,78 +50,85 @@ namespace FaFitu.Models
             MALE, FEMALE, UNDEFINEDLOL
         }
 
-        public string Name
+        private string name;
+        virtual public string Name
         {
-            get { return Name; }
-            set { Name = value; DirtyBit = true; }
+            get { return name; }
+            set { name = value; DirtyBit = true; }
         }
 
-        public string Email
+        private string email;
+        virtual public string Email
         {
-            get { return Email; }
-            set { Email = value; DirtyBit = true; }
+            get { return email; }
+            set { email = value; DirtyBit = true; }
         }
 
-        public string Password
+        private string pass;
+        virtual public string Password
         {
-            get { return Password; }
-            set { Password = value; DirtyBit = true; }
+            get { return pass; }
+            set { pass = value; DirtyBit = true; }
         }
 
-        public int? Mass // in kg
+        private int? mass;
+        virtual public int? Mass // in kg
         {
-            get { return Mass; }
-            set { Mass = value; DirtyBit = true; }
+            get { return mass; }
+            set { mass = value; DirtyBit = true; }
         }
 
-        public int? Activity // whatever it means
+        private int? activity;
+        virtual public int? Activity // whatever it means
         {
-            get { return Activity; }
-            set { Activity = value; DirtyBit = true; }
-        }
-        
-        public int? Age
-        {
-            get { return Age; }
-            set { Age = value; DirtyBit = true; }
+            get { return activity; }
+            set { activity = value; DirtyBit = true; }
         }
 
-        public int? CaloriesTarget // calories/day
+        private int? age;
+        virtual public int? Age
         {
-            get { return CaloriesTarget; }
-            set { CaloriesTarget = value; DirtyBit = true; }
+            get { return age; }
+            set { age = value; DirtyBit = true; }
         }
 
-        public int Service
+        private int? calTar;
+        virtual public int? CaloriesTarget // calories/day
         {
-            get { return Service; }
-            set { Service = value; DirtyBit = true; }
+            get { return calTar; }
+            set { calTar = value; DirtyBit = true; }
         }
 
-        public int? Id { get; protected set; }
+        private int serv;
+        virtual public int Service
+        {
+            get { return serv; }
+            set { serv = value; DirtyBit = true; }
+        }
 
-        public bool IsFromDb { get; protected set; }
+        virtual public int? Id { get; protected set; }
 
-        public bool DirtyBit { get; protected set; }
+        virtual public bool IsFromDb { get; protected set; }
+
+        virtual public bool DirtyBit { get; protected set; }
 
         // some more work for Piotr:
-        public bool AddToDb()
+        virtual public bool AddToDb()
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteFromDb()
+        virtual public bool DeleteFromDb()
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateInDb()
+        virtual public bool UpdateInDb()
         {
             throw new NotImplementedException();
         }
 
-
-        public bool Equals(UserModel other)
+        virtual public bool Equals(UserModel other)
         {
             if(Id != null && other.Id != null)
             {
@@ -129,8 +136,7 @@ namespace FaFitu.Models
             }
             return Name.Equals(other.Name) && Service == other.Service;
         }
-        // i recommend database abstraction class to implement such methods
-
+        
         public override string ToString()
         {
             return String.Format("uname:{0}, email:{1}, pass:{2}, mass:{3}, activity:{4}, age:{5}, caloriesTarget:{6}, service:{7}", Name, Email, Password, Mass, Activity, Age, CaloriesTarget, Service);
