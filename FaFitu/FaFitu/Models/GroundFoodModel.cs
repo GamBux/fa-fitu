@@ -16,42 +16,46 @@ namespace FaFitu.Models
             Nutrients = nutrients;
         }
 
-        public string Name
+        private string name;
+        virtual public string Name
         {
-            get { return Name; }
-            set { Name = value; DirtyBit = true; }
+            get { return name; }
+            set { name = value; DirtyBit = true; }
         }
 
-        public string Description
+        private string desc;
+        virtual public string Description
         {
-            get { return Description; }
-            set { Description = value; DirtyBit = true; }
+            get { return desc; }
+            set { desc = value; DirtyBit = true; }
         }
 
-        public NutrientsModel Nutrients
+        private NutrientsModel nutrs;
+        virtual public NutrientsModel Nutrients
         {
-            get { return Nutrients; }
-            set { Nutrients = value; DirtyBit = true; }
+            get { return nutrs; }
+            set { nutrs = value; DirtyBit = true; }
         }
 
-        public int? Id { get; protected set; }
 
-        public bool IsFromDb { get; protected set; }
+        virtual public int? Id { get; protected set; }
 
-        public bool DirtyBit { get; protected set; }
+        virtual public bool IsFromDb { get; protected set; }
+
+        virtual public bool DirtyBit { get; protected set; }
 
         // some more work for Piotr:
-        public bool AddToDb()
+        virtual public bool AddToDb()
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteFromDb()
+        virtual public bool DeleteFromDb()
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateInDb()
+        virtual public bool UpdateInDb()
         {
             throw new NotImplementedException();
         }

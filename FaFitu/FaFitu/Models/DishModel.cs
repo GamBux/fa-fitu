@@ -17,50 +17,56 @@ namespace FaFitu.Models
             Ingredients = new HashSet<Tuple<IFoodModel, double>>(ingredients);
         }
 
-        public string Name {
-            get { return Name; }
-            set { Name = value; DirtyBit = true; }
+        private string name;
+        virtual public string Name
+        {
+            get { return name; }
+            set { name = value; DirtyBit = true; }
         }
 
-        public string Description {
-            get { return Description; }
-            set { Description = value; DirtyBit = true; }
+        private string desc;
+        virtual public string Description
+        {
+            get { return desc; }
+            set { desc = value; DirtyBit = true; }
         }
         
         // preparation instructions
-        public string Recipe {
-            get { return Recipe; }
-            set { Recipe = value; DirtyBit = true; }
+        private string recipe;
+        virtual public string Recipe {
+            get { return recipe; }
+            set { recipe = value; DirtyBit = true; }
         }
 
+        private HashSet<Tuple<IFoodModel, double>> ings;
         public HashSet<Tuple<IFoodModel, double>> Ingredients {
-            get { return Ingredients; }
-            set { Ingredients = value; DirtyBit = true; }
+            get { return ings; }
+            set { ings = value; DirtyBit = true; }
         }
 
         public NutrientsModel Nutrients {
             get { return NutrientsModel.OfMany(Ingredients.Select(pair => new Tuple<NutrientsModel,double>(pair.Item1.Nutrients,pair.Item2))); }
         }
 
-        public int? Id { get; protected set; }
+        virtual public int? Id { get; protected set; }
 
-        public bool IsFromDb { get; protected set; }
+        virtual public bool IsFromDb { get; protected set; }
 
-        public bool DirtyBit { get; protected set; }
+        virtual public bool DirtyBit { get; protected set; }
 
         // Piotr, it's your job
-        public bool AddToDb() {
+        virtual public bool AddToDb() {
             //probably should use some smart method of FoodRelated
             throw new NotImplementedException();
         }
 
         // this one too
-        public bool DeleteFromDb() {
+        virtual public bool DeleteFromDb() {
             throw new NotImplementedException();
         }
 
         // and guess what - this one is also yours
-        public bool UpdateInDb() {
+        virtual public bool UpdateInDb() {
             throw new NotImplementedException();
         }
     }
