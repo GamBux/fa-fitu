@@ -1,6 +1,8 @@
 ﻿using FaFitu.Controllers;
+using FaFitu.DatabaseUtils;
 using FaFitu.Models;
 using FaFitu.Tests.MockedDatabaseUtils;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -15,24 +17,35 @@ namespace FaFitu.Tests.Controllers
     [TestClass]
     public class AccountControllerTest
     {
-        AccountController CreateAccountController()
+       // public IUsersRepository urepo { set; get; }
+
+      /*  [TestInitialize()]
+        public void AssemblyInit()
         {
-            return new AccountController(new MockedUsersRepository(), true);
+           // var cont = Bootstrapper.Initialise();
+            urepo = new MockedUsersRepository();
+        }*/
+
+        AccountController CreateAccountController(IUsersRepository iur)
+        {
+            return new AccountController(iur, true/*new IUsersRepository(), true*/);
         }
 
         [TestMethod]
         public void RegisterNonexistent()
         {
             // Arrange
-            var urepo = new MockedUsersRepository();
-            var controller = new AccountController(urepo, true);
-            Assert.IsFalse(urepo.UserExists("ojezujzu"));
+            var iur = new MockedUsersRepository();
+            var controller = CreateAccountController(iur);
+          //  IUnityContainer cont = Bootstrapper.Initialise();
+
+            Assert.IsFalse(iur.UserExists("ojezujzu"));
 
             // Act
             ActionResult result = controller.Register(new RegisterModel { UserName = "ojezujzu", Password = "a" });
 
             // Assert
-            Assert.IsTrue(urepo.UserExists("ojezujzu"));
+            Assert.IsTrue(iur.UserExists("ojezujzu"));
         }
     }
 }

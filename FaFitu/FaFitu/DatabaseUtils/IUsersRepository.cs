@@ -29,7 +29,9 @@ namespace FaFitu.DatabaseUtils
         bool DeleteUser(UserModel m);
 
         bool DeleteUser(string username, int service = 0);
-        bool DeleteUser(UserModel user);
+        //bool DeleteUser(UserModel user);
+
+        // probably wrong signature - which guy shall we update?
         int UpdateUser(UserModel m);
 
         NutrientsModel GetNutrientsReceived(DateTime from);

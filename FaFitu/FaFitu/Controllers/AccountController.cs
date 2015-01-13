@@ -12,6 +12,7 @@ using FaFitu.Filters;
 using FaFitu.Models;
 using FaFitu.DatabaseUtils;
 using FaFitu.Utils;
+using Microsoft.Practices.Unity;
 
 namespace FaFitu.Controllers
 {
@@ -19,19 +20,21 @@ namespace FaFitu.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        IUsersRepository usersRepository;
-        bool ignoreAuth;
+        //[Dependency]
+        IUsersRepository usersRepository; //{ get; set; }
+        bool ignoreAuth { get; set; }
 
-        public AccountController()
+       /* public AccountController()
             : this(new UsersRepository())
-        { }
+        { }*/
 
-        public AccountController(IUsersRepository iur)
+        [InjectionConstructor]
+        public AccountController(IUsersRepository iur) : this(iur, false)
         {
-            usersRepository = iur;
+            //usersRepository = iur;
         }
 
-        public AccountController(IUsersRepository iur, bool ignoreAuth)
+        public AccountController(IUsersRepository iur, bool ignoreAuth = false)
         {
             usersRepository = iur;
             this.ignoreAuth = ignoreAuth;

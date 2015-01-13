@@ -7,6 +7,26 @@ namespace FaFitu.Tests.MockedDatabaseUtils
 {
     class MockedFoodRepository : FaFitu.DatabaseUtils.IFoodRepository
     {
+        public int AddGroundFood(Models.GroundFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddDish(Models.DishModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateFood(Models.IFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteFood(Models.IFoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
         public HashSet<Models.IFoodModel> GetCustomFood(Models.UserModel user)
         {
             throw new NotImplementedException();
@@ -17,12 +37,22 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             throw new NotImplementedException();
         }
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from)
+        public Models.IFoodModel GetFoodById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Models.NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public HashSet<Models.IFoodModel> GetFoodsWithSubsequenceInName(string partial_name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<Models.IFoodModel> GetAllGroundFoods()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<Models.IFoodModel> GetAllDishes()
         {
             throw new NotImplementedException();
         }

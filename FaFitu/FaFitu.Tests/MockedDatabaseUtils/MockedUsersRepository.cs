@@ -112,5 +112,11 @@ namespace FaFitu.Tests.MockedDatabaseUtils
         {
             throw new NotImplementedException();
         }
+
+
+        public int UpdateUser(UserModel m)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

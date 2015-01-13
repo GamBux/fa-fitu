@@ -23,6 +23,9 @@ namespace FaFitu
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            // setup of DI (IoC)
+            Bootstrapper.Initialise();
         }
     }
 }
