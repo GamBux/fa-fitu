@@ -43,5 +43,15 @@ namespace FaFitu.Models
                 //VitaminsModel.OfMany(foods.Select(nutr => nutr.Vitamins))
             );
         }
+
+        public static NutrientsModel Add(NutrientsModel nm, double proteins, double carbons, double fats)
+        {
+            return new NutrientsModel(nm.Proteins + proteins, nm.Carbons + carbons, nm.Fats + fats);
+        }
+
+        public static NutrientsModel Add(NutrientsModel nm1, NutrientsModel nm2)
+        {
+            return Add(nm1, nm2.Proteins, nm2.Carbons, nm2.Fats);
+        }
     }
 }

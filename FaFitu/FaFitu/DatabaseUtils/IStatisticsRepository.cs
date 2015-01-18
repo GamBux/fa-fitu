@@ -8,10 +8,10 @@ namespace FaFitu.DatabaseUtils
 {
     public interface IStatisticsRepository
     {
-        NutrientsModel GetNutrientsReceived(UserModel m, UserModel m, DateTime from);
+        NutrientsModel GetNutrientsReceived(UserModel m, DateTime from);
         NutrientsModel GetNutrientsReceived(UserModel m, DateTime from, DateTime to);
 
-        NutrientsModel AddEaten(UserModel m, NutrientsModel justEaten, DateTime? now);
+        void AddEaten(UserModel m, NutrientsModel justEaten, DateTime now);
 
     }
 }
