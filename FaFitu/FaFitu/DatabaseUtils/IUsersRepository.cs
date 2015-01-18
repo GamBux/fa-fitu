@@ -34,7 +34,7 @@ namespace FaFitu.DatabaseUtils
         // probably wrong signature - which guy shall we update?
         bool UpdateUser(UserModel m);
 
-        NutrientsModel GetNutrientsReceived(DateTime from);
-        NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
+        //NutrientsModel GetNutrientsReceived(UserModel m, UserModel m, DateTime from);
+       // NutrientsModel GetNutrientsReceived(UserModel m, DateTime from, DateTime to);
     }
 }

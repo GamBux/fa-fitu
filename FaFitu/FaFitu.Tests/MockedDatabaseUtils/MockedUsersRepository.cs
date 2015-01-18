@@ -11,6 +11,7 @@ namespace FaFitu.Tests.MockedDatabaseUtils
     class MockedUsersRepository : FaFitu.DatabaseUtils.IUsersRepository
     {
         List<UserModel> users;
+
         int count;
 
         public MockedUsersRepository()
@@ -103,20 +104,45 @@ namespace FaFitu.Tests.MockedDatabaseUtils
         }
 
 
-        public NutrientsModel GetNutrientsReceived(DateTime from)
+       /* public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from)
         {
             throw new NotImplementedException();
         }
 
-        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from, DateTime to)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
 
-        public int UpdateUser(UserModel m)
+        public bool UpdateUser(UserModel m)
         {
-            throw new NotImplementedException();
+            if(m.Id == null)
+            {
+                throw new FaFitu.DatabaseUtils.RepositoryExceptions.UsersRepositoryException(
+                   "Trying to update user without Id.");
+            }
+            else
+            {
+                int id = (int)m.Id;
+                if (UserExists(id))
+                {
+                    int deleted = users.RemoveAll(um => id == um.Id);
+                    if(deleted != 1)
+                    {
+                        throw new FaFitu.DatabaseUtils.RepositoryExceptions.UsersRepositoryException(
+                            String.Format("There is more than one user with id={0}", id));
+                    }
+                    else
+                    {
+                        users.Add(m);
+                        return true;
+                    }
+                }
+                else
+                    throw new FaFitu.DatabaseUtils.RepositoryExceptions.UsersRepositoryException(
+                        "Trying to update nonexistent user.");
+            }
         }
     }
 }

@@ -15,6 +15,6 @@ namespace FaFitu.Models
         string Name { get; set; }
         string Description { get; set; }
 
-        NutrientsModel Nutrients { get; }
+        NutrientsModel Nutrients { get; set; }
     }
 }
