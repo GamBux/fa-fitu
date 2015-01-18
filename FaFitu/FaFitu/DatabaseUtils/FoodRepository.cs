@@ -41,16 +41,8 @@ namespace FaFitu.DatabaseUtils
 
         public bool AddGroundFood(GroundFoodModel m)
         {
-           NpgsqlConnection conn = DataBaseConnection.GetConnection();
-           string operation = "INSERT INTO Food" + PrettyPrinterFood.getFormatedGroundNames() + " VALUES " + PrettyPrinterFood.getFormatedGroundValues(m);
-            //creating whole command
-            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
-
-            conn.Open();
-            int ret = Command.ExecuteNonQuery();
-            conn.Close();
-
-
+            string operation = "INSERT INTO Food" + PrettyPrinterFood.getFormatedGroundNames() + " VALUES " + PrettyPrinterFood.getFormatedGroundValues(m);
+            int ret = DataBaseConnection.ExecuteNonQuery(operation);
             return ret > 0;
         }
 
