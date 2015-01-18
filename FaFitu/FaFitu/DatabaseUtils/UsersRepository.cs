@@ -190,17 +190,17 @@ namespace FaFitu.DatabaseUtils
             throw new NotImplementedException();
         }
 
-        public int UpdateUser(UserModel m)
+        public bool UpdateUser(UserModel m)
         {
             throw new NotImplementedException();
         }
 
-        public NutrientsModel GetNutrientsReceived(DateTime from)
+        public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from)
         {
             throw new NotImplementedException();
         }
 
-        public NutrientsModel GetNutrientsReceived(DateTime from, DateTime to)
+        public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }

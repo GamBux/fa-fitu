@@ -12,9 +12,9 @@ namespace FaFitu.Models
         bool DirtyBit { get; } // initially false, should be set if IsFromDb && state updated since query
         int? Id { get; }
 
-        bool AddToDb();
+      /*  bool AddToDb();
         bool DeleteFromDb();
-        bool UpdateInDb();
+        bool UpdateInDb(); */
         // IMO searching/getting (queries) should be provided by external class being sort of a factory class for IDbModels
     }
 }
