@@ -103,18 +103,6 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             return DeleteUser(user.Name, user.Service);
         }
 
-
-       /* public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from)
-        {
-            throw new NotImplementedException();
-        }
-
-        public NutrientsModel GetNutrientsReceived(UserModel m, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }*/
-
-
         public bool UpdateUser(UserModel m)
         {
             if(m.Id == null)

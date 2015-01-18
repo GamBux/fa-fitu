@@ -9,59 +9,98 @@ namespace FaFitu.Tests.MockedDatabaseUtils
 {
     class MockedFoodRepository : IFoodRepository
     {
-        HashSet<GroundFoodModel> grounds;
-        HashSet<DishModel> dishes;
-
-
-
-        public int AddGroundFood(GroundFoodModel m)
+        List<GroundFoodModel> grounds;
+        List<DishModel> dishes;
+        IUsersRepository usersRepo;
+      //  int count;
+        
+        public MockedFoodRepository()
         {
-            grounds.Add(m);
+            grounds = new List<GroundFoodModel>();
+            dishes = new List<DishModel>();
+           // count = 0;
         }
 
-        public int AddDish(DishModel m)
+
+        public bool AddGroundFood(GroundFoodModel m)
+        {
+            grounds.Add(m);
+            return true;
+        }
+
+        public bool AddDish(DishModel m)
+        {
+            dishes.Add(m);
+            return true;
+        }
+
+        public bool UpdateGroundFood(GroundFoodModel gm)
+        {
+            if(grounds.Any(m => m.Id == gm.Id))
+            {
+                grounds.RemoveAll(m => m.Id == gm.Id);
+                return AddGroundFood(gm);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateDish(DishModel dm)
+        {
+            if (dishes.Any(m => m.Id == dm.Id))
+            {
+                dishes.RemoveAll(m => m.Id == dm.Id);
+                return AddDish(dm);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public GroundFoodModel GetGroundFood(string name)
+        {
+            return grounds.Where(m => m.Name == name).First();
+        }
+
+        public List<GroundFoodModel> GetGroundFoodBySubName(string subName)
+        {
+            return grounds.Where(m => m.Name.Contains(subName)).ToList();
+        }
+
+        public DishModel GetDish(string name, int uid)
+        {
+            return dishes.Where(m => m.Name == name && )
+        }
+
+        public List<DishModel> GetDishBySubName(string subName, int uid)
         {
             throw new NotImplementedException();
         }
 
+        public List<FoodModel> GetCustomFood(UserModel user)
+        {
+            throw new NotImplementedException();
+        }
 
-        public int UpdateFood(FoodModel m)
+        public Tuple<List<GroundFoodModel>, List<DishModel>> GetDefaultFood()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<GroundFoodModel> GetAllGround()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DishModel> GetAllDishes()
         {
             throw new NotImplementedException();
         }
 
         public bool DeleteFood(FoodModel m)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public HashSet<Models.FoodModel> GetCustomFood(UserModel user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HashSet<FoodModel> GetDefaultFood()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Models.FoodModel GetFoodById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HashSet<FoodModel> GetFoodsWithSubsequenceInName(string partial_name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HashSet<FoodModel> GetAllGroundFoods()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HashSet<FoodModel> GetAllDishes()
         {
             throw new NotImplementedException();
         }
