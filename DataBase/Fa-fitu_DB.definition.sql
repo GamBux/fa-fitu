@@ -40,15 +40,16 @@ CREATE TABLE Users(
 
 CREATE TABLE Food(
 	fid 		serial		PRIMARY KEY,	
-	fname 		varchar 	UNIQUE NOT NULL,
+	fname 		varchar 	NOT NULL,
 	uid 		int 		references Users(uid),
 	carbons 	int 		DEFAULT 0,
 	fats 		int 		DEFAULT 0,
 	proteins 	int 		DEFAULT 0,
-	isGround 	bool 		NOT NULL,
+	isGround 	bool 		DEFAULT true NOT NULL,
 	description text		DEFAULT 'Empty Description',
 	recipe		text		DEFAULT 'To fully grow such a deliciuos...',
-	weightSoFar	int 		DEFAULT 0
+	weightSoFar	int 		DEFAULT 0,
+	UNIQUE (fname, uid)
 )
 ;
 

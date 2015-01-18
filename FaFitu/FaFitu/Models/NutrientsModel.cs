@@ -44,7 +44,7 @@ namespace FaFitu.Models
             );
         }
 
-        public static NutrientsModel Add(NutrientsModel nm, double proteins, double carbons, double fats)
+        public static NutrientsModel Add(NutrientsModel nm, int proteins, int carbons, int fats)
         {
             return new NutrientsModel(nm.Proteins + proteins, nm.Carbons + carbons, nm.Fats + fats);
         }

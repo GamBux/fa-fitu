@@ -39,21 +39,19 @@ namespace FaFitu.DatabaseUtils
             throw new NotImplementedException();
         }
 
-        public bool AddGroundFood(FoodModel m)
+        public bool AddGroundFood(GroundFoodModel m)
         {
-            // conn = DataBaseConnection.GetConnection();
-           // string operation = "INSERT INTO Food" + PrettyPrinterFood.getFormatedFieldsNames() + " VALUES " + PrettyPrinterFood.getFormatedValues(m);
+           NpgsqlConnection conn = DataBaseConnection.GetConnection();
+           string operation = "INSERT INTO Food" + PrettyPrinterFood.getFormatedGroundNames() + " VALUES " + PrettyPrinterFood.getFormatedGroundValues(m);
+            //creating whole command
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
 
-            // creating whole command
-
-            // Command = new NpgsqlCommand(operation, conn);
-
-            //conn.Open();
-           // int ret = Command.ExecuteNonQuery();
-//conn.Close();
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
 
 
-            return 0 > 0;
+            return ret > 0;
         }
 
         public int AddDish(DishModel m)
@@ -71,7 +69,53 @@ namespace FaFitu.DatabaseUtils
             throw new NotImplementedException();
         }
 
-        public int AddGroundFood(GroundFoodModel m)
+
+        bool IFoodRepository.AddDish(DishModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateGroundFood(GroundFoodModel gm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateDish(DishModel dm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GroundFoodModel GetGroundFood(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<GroundFoodModel> GetGroundFoodBySubName(string subName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DishModel GetDish(string name, int uid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<DishModel> GetDishBySubName(string subName)
+        {
+            throw new NotImplementedException();
+        }
+
+        Tuple<HashSet<GroundFoodModel>, HashSet<DishModel>> IFoodRepository.GetDefaultFood()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<GroundFoodModel> GetAllGround()
+        {
+            throw new NotImplementedException();
+        }
+
+        HashSet<DishModel> IFoodRepository.GetAllDishes()
         {
             throw new NotImplementedException();
         }

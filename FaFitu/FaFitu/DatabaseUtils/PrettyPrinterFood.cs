@@ -9,21 +9,18 @@ namespace FaFitu.DatabaseUtils
 {
     public class PrettyPrinterFood
     {
-        public static string getFormatedFieldsNames() 
+        public static string getFormatedGroundNames() 
         {
-            return "(fname, uid, carbons, fats, proteins, isGround, description, recipe, weightSoFar)";
+            return "(fname, carbons, fats, proteins, description)";
         }
 
-        /*public static string getFormatedValues(FoodModel fo) 
+        public static string getFormatedGroundValues(GroundFoodModel fo) 
         {
-         /*   Queue<string> q = new Queue<string>();
+            Queue<string> q = new Queue<string>();
 
             //Name;
             string NameS = Utils.UtilS.wrap(fo.Name);
             q.Enqueue(NameS);
-            //Uid;
-            string UidS = Utils.UtilS.maybeIntToS(fo.Uid);
-            q.Enqueue(UidS);
 
             //carbons;
             string carbonsS = Utils.UtilS.maybeIntToS(fo.Nutrients.Carbons);
@@ -37,17 +34,10 @@ namespace FaFitu.DatabaseUtils
             string proteinsS = Utils.UtilS.maybeIntToS(fo.Nutrients.Proteins);
             q.Enqueue(proteinsS);
 
-            //IsGround;
-            string IsGroundS = fo.IsGround.ToString();
-            q.Enqueue(IsGroundS);
 
             //Description;
             string DescriptionS = Utils.UtilS.wrap(fo.Description);
             q.Enqueue(DescriptionS);
-
-            //Recipe;
-            string RecipeS = Utils.UtilS.wrap(fo.Recipe);
-            q.Enqueue(RecipeS);
 
 
             //putting it together
@@ -55,7 +45,7 @@ namespace FaFitu.DatabaseUtils
             record = UtilS.wrap("(", record, ")");
 
             return record;
-        }*/
+        }
 
 
     }

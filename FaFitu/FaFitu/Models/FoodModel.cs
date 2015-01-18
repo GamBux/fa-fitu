@@ -15,11 +15,11 @@ namespace FaFitu.Models
             DirtyBit = true;
             Id = null;
         }
-
+        public bool IsGround { get; set; }
         public int? Id;
-        public string Name;
+        public string Name {get; set;}
         public NutrientsModel Nutrients{get; set;}
-        public string Description;
+        public string Description { get; set; }
         
         
 

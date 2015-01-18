@@ -14,19 +14,7 @@ namespace FaFitu.Models
             Nutrients = nutrients;
         }
 
-        private string name;
-        virtual public string Name
-        {
-            get { return name; }
-            set { name = value; DirtyBit = true; }
-        }
-
-        private string desc;
-        virtual public string Description
-        {
-            get { return desc; }
-            set { desc = value; DirtyBit = true; }
-        }
+        
 
         private NutrientsModel nutrs;
         virtual public NutrientsModel Nutrients

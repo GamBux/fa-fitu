@@ -9,20 +9,42 @@ namespace FaFitu.DatabaseUtils
 {
     public interface IFoodRepository
     {
-        int AddGroundFood(GroundFoodModel m); // should return inserted item's id
-        int AddDish(DishModel m); // should return inserted item's id
+        bool AddGroundFood(GroundFoodModel m); // should return inserted item's id
+        bool AddDish(DishModel m); // should return inserted item's id
 
-        int UpdateFood(FoodModel m);
+        /*
+         * Update
+         * */
+        bool UpdateGroundFood(GroundFoodModel gm);
+        bool UpdateDish(DishModel dm);
 
-        bool DeleteFood(FoodModel m);
+        /*GET
+         * */
 
+        //Ground food
+        GroundFoodModel GetGroundFood(string name);
+        HashSet<GroundFoodModel> GetGroundFoodBySubName(string subName);
+
+        //Dish Food
+        DishModel GetDish(string name, int uid);
+        HashSet<DishModel> GetDishBySubName(string subName);
+
+        //User Food
         HashSet<FoodModel> GetCustomFood(UserModel user);
-        HashSet<FoodModel> GetDefaultFood();
-       // NutrientsModel GetNutrientsReceived(DateTime from);
-       // NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
-        FoodModel GetFoodById(int id);
-        HashSet<FoodModel> GetFoodsWithSubsequenceInName(string partial_name);
-        HashSet<FoodModel> GetAllGroundFoods();
-        HashSet<FoodModel> GetAllDishes();
+
+        //Default and All Ground
+        Tuple<HashSet<GroundFoodModel>, HashSet<DishModel>> GetDefaultFood();
+
+        //All Ground
+        HashSet<GroundFoodModel> GetAllGround();
+
+        //All Dishes
+        HashSet<DishModel> GetAllDishes();
+
+
+        /*
+         * Delete
+         * */
+        bool DeleteFood(FoodModel m);
     }
 }

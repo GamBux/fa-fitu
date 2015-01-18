@@ -14,12 +14,10 @@ namespace DataBaseTest
     {
         static void Main(string[] args)
         {
-           /* FoodModel food = new FoodModel("jajo", 0, "Ale jaja", "Wezmisz czarno kure");
-            food.Nutrients = new NutrientsModel(15, 5, 83);
-
+            GroundFoodModel food = new GroundFoodModel("Jajo", "Ale jaja!", new NutrientsModel(15, 8 ,89));
             FoodRepository tester = new FoodRepository();
 
-            tester.AddGroundFood(food);*/
+            tester.AddGroundFood(food);
             
         }
 
