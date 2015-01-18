@@ -9,7 +9,7 @@ namespace FaFitu.DatabaseUtils
 {
     public class PrettyPrinterUser
     {
-        public static string getFormatedFields()
+        public static string getFormatedFieldsNames()
         {
             return "(uname, email, pass, mass, activity, age, caloriesTarget, service)";
         }

@@ -32,7 +32,7 @@ namespace FaFitu.DatabaseUtils
         //bool DeleteUser(UserModel user);
 
         // probably wrong signature - which guy shall we update?
-        int UpdateUser(UserModel m);
+        bool UpdateUser(UserModel m);
 
         NutrientsModel GetNutrientsReceived(DateTime from);
         NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);

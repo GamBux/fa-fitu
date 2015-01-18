@@ -75,7 +75,7 @@ namespace FaFitu.DatabaseUtils
         public bool AddUser(UserModel user)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
-            string operation = "INSERT INTO Users" + PrettyPrinterUser.getFormatedFields() +"VALUES " + PrettyPrinterUser.getFormatedValues(user);
+            string operation = "INSERT INTO Users" + PrettyPrinterUser.getFormatedFieldsNames() +"VALUES " + PrettyPrinterUser.getFormatedValues(user);
             
             // creating whole command
            
@@ -190,9 +190,21 @@ namespace FaFitu.DatabaseUtils
             throw new NotImplementedException();
         }
 
-        public int UpdateUser(UserModel m)
+        public bool UpdateUser(UserModel m)
         {
-            throw new NotImplementedException();
+            NpgsqlConnection conn = DataBaseConnection.GetConnection();
+            string operation = "Update Users SET" + PrettyPrinterUser.getFormatedFieldsNames() + " = " + PrettyPrinterUser.getFormatedValues(m) + " WHERE uid =" + m.Id.ToString();
+
+            // creating whole command
+
+            NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
+
+            conn.Open();
+            int ret = Command.ExecuteNonQuery();
+            conn.Close();
+
+
+            return ret > 0;
         }
 
         public NutrientsModel GetNutrientsReceived(DateTime from)

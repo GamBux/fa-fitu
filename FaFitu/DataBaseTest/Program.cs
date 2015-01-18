@@ -28,7 +28,10 @@ namespace DataBaseTest
             if (tester.UserExists("Ada") == false) tester.AddUser(user);
             tester.DeleteUser("Ada", 0);
             tester.AddUser(user);
+            
             UserModel user2 = tester.GetUser("Ada", 0);
+            user2.Password = "MySuperiorPass";
+            tester.UpdateUser(user2);
 
         }
     }
