@@ -112,7 +112,7 @@ namespace FaFitu.Models
 
         virtual public bool DirtyBit { get; protected set; }
 
-        // some more work for Piotr:
+      /*  // some more work for Piotr:
         virtual public bool AddToDb()
         {
             throw new NotImplementedException();
@@ -127,7 +127,7 @@ namespace FaFitu.Models
         {
             throw new NotImplementedException();
         }
-
+        */
         virtual public bool Equals(UserModel other)
         {
             if(Id != null && other.Id != null)
