@@ -26,8 +26,10 @@ namespace FaFitu.DatabaseUtils
         HashSet<GroundFoodModel> GetGroundFoodBySubName(string subName);
 
         //Dish Food
+        // Ludzie mają swoje dania a jako, że nie chcemy pozwolić tylko 
+        // jednemu uzytkownikowi nazwac coś barszczem to mamy barszcz na uzytkownika
         DishModel GetDish(string name, int uid);
-        HashSet<DishModel> GetDishBySubName(string subName);
+        HashSet<DishModel> GetDishBySubName(string subName, int uid);
 
         //User Food
         HashSet<FoodModel> GetCustomFood(UserModel user);

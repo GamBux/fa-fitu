@@ -26,7 +26,7 @@ namespace FaFitu.DatabaseUtils
         /// use connection.close() after reading from reader!!!
         /// </summary>
         /// <returns></returns>
-        public static Tuple<NpgsqlConnection,NpgsqlDataReader> ExecuteReader(string operation)
+        public static Tuple<NpgsqlConnection,NpgsqlDataReader> GetReader(string operation)
         {
             NpgsqlConnection conn = DataBaseConnection.GetConnection();
             NpgsqlCommand Command = new NpgsqlCommand(operation, conn);
