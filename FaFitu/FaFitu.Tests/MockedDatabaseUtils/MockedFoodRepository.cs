@@ -17,42 +17,42 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             throw new NotImplementedException();
         }
 
-        public int UpdateFood(Models.IFoodModel m)
+        public int UpdateFood(Models.FoodModel m)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteFood(Models.IFoodModel m)
+        public bool DeleteFood(Models.FoodModel m)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<Models.IFoodModel> GetCustomFood(Models.UserModel user)
+        public HashSet<Models.FoodModel> GetCustomFood(Models.UserModel user)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<Models.IFoodModel> GetDefaultFood()
+        public HashSet<Models.FoodModel> GetDefaultFood()
         {
             throw new NotImplementedException();
         }
 
-        public Models.IFoodModel GetFoodById(int id)
+        public Models.FoodModel GetFoodById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<Models.IFoodModel> GetFoodsWithSubsequenceInName(string partial_name)
+        public HashSet<Models.FoodModel> GetFoodsWithSubsequenceInName(string partial_name)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<Models.IFoodModel> GetAllGroundFoods()
+        public HashSet<Models.FoodModel> GetAllGroundFoods()
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<Models.IFoodModel> GetAllDishes()
+        public HashSet<Models.FoodModel> GetAllDishes()
         {
             throw new NotImplementedException();
         }

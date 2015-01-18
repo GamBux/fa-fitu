@@ -12,17 +12,17 @@ namespace FaFitu.DatabaseUtils
         int AddGroundFood(GroundFoodModel m); // should return inserted item's id
         int AddDish(DishModel m); // should return inserted item's id
 
-        int UpdateFood(IFoodModel m);
+        int UpdateFood(FoodModel m);
 
-        bool DeleteFood(IFoodModel m);
+        bool DeleteFood(FoodModel m);
 
-        HashSet<IFoodModel> GetCustomFood(UserModel user);
-        HashSet<IFoodModel> GetDefaultFood();
+        HashSet<FoodModel> GetCustomFood(UserModel user);
+        HashSet<FoodModel> GetDefaultFood();
        // NutrientsModel GetNutrientsReceived(DateTime from);
        // NutrientsModel GetNutrientsReceived(DateTime from, DateTime to);
-        IFoodModel GetFoodById(int id);
-        HashSet<IFoodModel> GetFoodsWithSubsequenceInName(string partial_name);
-        HashSet<IFoodModel> GetAllGroundFoods();
-        HashSet<IFoodModel> GetAllDishes();
+        FoodModel GetFoodById(int id);
+        HashSet<FoodModel> GetFoodsWithSubsequenceInName(string partial_name);
+        HashSet<FoodModel> GetAllGroundFoods();
+        HashSet<FoodModel> GetAllDishes();
     }
 }

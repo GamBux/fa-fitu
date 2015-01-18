@@ -225,6 +225,7 @@
     <Compile Include="DatabaseUtils\DataBaseConnection.cs" />
     <Compile Include="DatabaseUtils\IFoodRepository.cs" />
     <Compile Include="DatabaseUtils\IUsersRepository.cs" />
+    <Compile Include="DatabaseUtils\PrettyPrinterFood.cs" />
     <Compile Include="DatabaseUtils\PrettyPrinterUser.cs" />
     <Compile Include="DatabaseUtils\RepositoryExceptions.cs" />
     <Compile Include="DatabaseUtils\UsersRepository.cs" />
@@ -236,9 +237,9 @@
     <Compile Include="DatabaseUtils\FoodRepository.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\DishModel.cs" />
+    <Compile Include="Models\FoodModel.cs" />
     <Compile Include="Models\GroundFoodModel.cs" />
     <Compile Include="Models\IDbModel.cs" />
-    <Compile Include="Models\IFoodModel.cs" />
     <Compile Include="Models\NutrientsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VitaminsModel.cs" />
