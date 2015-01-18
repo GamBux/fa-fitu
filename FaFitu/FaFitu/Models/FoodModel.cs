@@ -5,68 +5,41 @@ using System.Web;
 
 namespace FaFitu.Models
 {
-    public class FoodModel : IFoodModel
+    public class FoodModel : IDbModel
     {
-        public FoodModel(string n, string d, NutrientsModel nut, int? id = null)
+        public FoodModel(string n, string d)
         {
-            Name = n;
-            Description = d;
-            Nutrients = nut;
-            Id = id;
+            this.Name = n;
+            this.Description = d;
+            IsFromDb = false;
+            DirtyBit = true;
+            Id = null;
         }
 
-        public string name;
-        virtual public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
-
-        public string description;
-        virtual public string Description
-        {
-            get
-            {
-                return description;
-            }
-            set
-            {
-                description = value;
-            }
-        }
-
-        public NutrientsModel nutrients;
-        virtual public NutrientsModel Nutrients
-        {
-            get { return nutrients; }
-            set { nutrients = value; }
-        }
+        public int? Id;
+        public string Name;
+        public NutrientsModel Nutrients{get; set;}
+        public string Description;
+        
+        
 
         virtual public bool IsFromDb { get; protected set; }
 
         virtual public bool DirtyBit { get; protected set; }
 
-        virtual public int? Id { get; protected set; }
-
-       /* public bool AddToDb()
+        int? IDbModel.Id
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public bool DeleteFromDb()
+        bool IDbModel.IsFromDb
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public bool UpdateInDb()
+        bool IDbModel.DirtyBit
         {
-            throw new NotImplementedException();
-        }*/
+            get { throw new NotImplementedException(); }
+        }
     }
 }

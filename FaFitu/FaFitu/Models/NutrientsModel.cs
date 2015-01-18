@@ -7,9 +7,9 @@ namespace FaFitu.Models
 {
     public class NutrientsModel
     {
-        public double Proteins { get; set; }
-        public double Carbons { get; set; }
-        public double Fats { get; set; }
+        public int Proteins { get; set; }
+        public int Carbons { get; set; }
+        public int Fats { get; set; }
         
         // really? we need it?
         public double Water { get; set; }
@@ -17,14 +17,14 @@ namespace FaFitu.Models
         public VitaminsModel Vitamins { get; set; }
 
         // currently i dont care for the vitamins, so i'll be using this constructor:
-        public NutrientsModel(double proteins, double carbons, double fats)
+        public NutrientsModel(int proteins, int carbons, int fats)
         {
             Proteins = proteins;
             Fats = fats;
             Carbons = carbons;
         }
 
-        public NutrientsModel(double proteins, double carbons, double fats, VitaminsModel vitamins)
+        public NutrientsModel(int proteins, int carbons, int fats, VitaminsModel vitamins)
         {
             Proteins = proteins;
             Fats = fats;
@@ -32,7 +32,7 @@ namespace FaFitu.Models
             Carbons = carbons;
         }
 
-        public static NutrientsModel OfMany(IEnumerable< Tuple<NutrientsModel, double> > foods)
+        public static NutrientsModel OfMany(IEnumerable< Tuple<NutrientsModel, int> > foods)
         {
             return new NutrientsModel(
                 foods.Sum(pair => pair.Item2 * pair.Item1.Proteins),

@@ -3,45 +3,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Npgsql;
 
 namespace FaFitu.DatabaseUtils
 {
     public class FoodRepository : IFoodRepository
     {
-        public HashSet<IFoodModel> GetCustomFood(UserModel user)
+        public HashSet<FoodModel> GetCustomFood(UserModel user)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<IFoodModel> GetDefaultFood()
+        public HashSet<FoodModel> GetDefaultFood()
         {
             throw new NotImplementedException();
         }
 
-        public IFoodModel GetFoodById(int id)
+        public FoodModel GetFoodById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<IFoodModel> GetFoodsWithSubsequenceInName(string partial_name)
+        public HashSet<FoodModel> GetFoodsWithSubsequenceInName(string partial_name)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<IFoodModel> GetAllGroundFoods()
+        public HashSet<FoodModel> GetAllGroundFoods()
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<IFoodModel> GetAllDishes()
+        public HashSet<FoodModel> GetAllDishes()
         {
             throw new NotImplementedException();
         }
 
-        public int AddGroundFood(GroundFoodModel m)
+        public bool AddGroundFood(FoodModel m)
         {
-            throw new NotImplementedException();
-            
+            // conn = DataBaseConnection.GetConnection();
+           // string operation = "INSERT INTO Food" + PrettyPrinterFood.getFormatedFieldsNames() + " VALUES " + PrettyPrinterFood.getFormatedValues(m);
+
+            // creating whole command
+
+            // Command = new NpgsqlCommand(operation, conn);
+
+            //conn.Open();
+           // int ret = Command.ExecuteNonQuery();
+//conn.Close();
+
+
+            return 0 > 0;
         }
 
         public int AddDish(DishModel m)
@@ -49,12 +61,17 @@ namespace FaFitu.DatabaseUtils
             throw new NotImplementedException();
         }
 
-        public int UpdateFood(IFoodModel m)
+        public int UpdateFood(FoodModel m)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteFood(IFoodModel m)
+        public bool DeleteFood(FoodModel m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddGroundFood(GroundFoodModel m)
         {
             throw new NotImplementedException();
         }

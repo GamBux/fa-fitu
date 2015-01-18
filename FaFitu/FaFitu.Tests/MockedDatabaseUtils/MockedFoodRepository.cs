@@ -24,6 +24,7 @@ namespace FaFitu.Tests.MockedDatabaseUtils
             throw new NotImplementedException();
         }
 
+
         public int UpdateFood(FoodModel m)
         {
             throw new NotImplementedException();
@@ -33,6 +34,7 @@ namespace FaFitu.Tests.MockedDatabaseUtils
         {
             throw new NotImplementedException();
         }
+
 
         public HashSet<Models.FoodModel> GetCustomFood(UserModel user)
         {

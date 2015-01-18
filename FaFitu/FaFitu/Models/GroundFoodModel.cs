@@ -5,14 +5,12 @@ using System.Web;
 
 namespace FaFitu.Models
 {
-    public class GroundFoodModel : IFoodModel
+    public class GroundFoodModel : FoodModel
     {
         // Constructor for ground food
-        public GroundFoodModel(string name, NutrientsModel nutrients)
+        public GroundFoodModel(string name, string desc, NutrientsModel nutrients)
+            :base(name, desc)
         {
-            Id = null;
-            IsFromDb = false;
-            Name = name;
             Nutrients = nutrients;
         }
 

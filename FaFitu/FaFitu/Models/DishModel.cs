@@ -7,14 +7,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FaFitu.Models
 {
-    public class DishModel : IFoodModel
+    public class DishModel : FoodModel
     {
-        public DishModel(string name, params Tuple<IFoodModel, double>[] ingredients)
+        public DishModel(string name, string desc, string recipe, params Tuple<FoodModel, int>[] ingredients)
+            :base(name,desc)
         {
-            Id = null;
-            IsFromDb = false;
-            Name = name;
-            Ingredients = new HashSet<Tuple<IFoodModel, double>>(ingredients);
+            Recipe = recipe;
+            Ingredients = new HashSet<Tuple<FoodModel, int>>(ingredients);
         }
 
         private string name;
@@ -38,14 +37,14 @@ namespace FaFitu.Models
             set { recipe = value; DirtyBit = true; }
         }
 
-        private HashSet<Tuple<IFoodModel, double>> ings;
-        public HashSet<Tuple<IFoodModel, double>> Ingredients {
+        private HashSet<Tuple<FoodModel, int>> ings;
+        public HashSet<Tuple<FoodModel, int>> Ingredients {
             get { return ings; }
             set { ings = value; DirtyBit = true; }
         }
 
         public NutrientsModel Nutrients {
-            get { return NutrientsModel.OfMany(Ingredients.Select(pair => new Tuple<NutrientsModel,double>(pair.Item1.Nutrients,pair.Item2))); }
+           get { return NutrientsModel.OfMany(Ingredients.Select(pair => new Tuple<NutrientsModel,int>(pair.Item1.Nutrients ,pair.Item2))); }
         }
 
         virtual public int? Id { get; protected set; }
